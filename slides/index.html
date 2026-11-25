@@ -341,8 +341,24 @@
 <ul class="points"><li><span class="label">ライン1 学習に使われないか</span>：サービスとプランで決まる<ul class="sub"><li>例：Gemini APIの無料枠は製品改善に使われ、人が読むこともある。有料枠は使われない</li></ul></li><li><span class="label">ライン2 外に出してよい情報か</span>：利用目的と本人の同意で決まる<ul class="sub"><li>集めたときの利用目的の範囲内か</li><li>本人の同意なく、出力以外の目的（学習など）で扱われるサービスに入れていないか</li></ul></li><li class="then">どちらかに不安があれば入れない<ul class="sub"><li>名前を伏せる、ダミーに置き換える、責任者に相談する</li></ul></li></ul>
 </div></section>
 
-<section class="slide"><h2>判定基準の根拠</h2><div class="body">
+<section class="slide"><h2>有料版AIに渡してよいかのチェック（1/2）</h2><div class="body">
+<ul class="points"><li><span class="label">① 情報の種類</span>：要配慮個人情報が含まれていないか<ul class="sub"><li>病歴、犯罪の経歴、犯罪の被害を受けた事実、信条、社会的身分など（法2条3項）</li><li>含まれるなら、原則として渡さない</li></ul></li><li><span class="label">② 利用目的</span>：集めたときに示した目的の範囲内か<ul class="sub"><li>確かめる文書：プライバシーポリシー、申込フォームの同意文、委任契約書</li><li>例：「活動の連絡のため」に集めたメールアドレスで、連絡文を作る → 範囲内</li></ul></li><li><span class="label">③ 契約・同意の文言</span>：外部サービスに預けることが許されているか<ul class="sub"><li>「業務委託先に提供することがある」「外部サービスで処理する」などの記載</li><li>秘密保持の条項で、第三者への開示が禁じられていないか</li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>有料版AIに渡してよいかのチェック（2/2）</h2><div class="body">
+<ul class="points"><li><span class="label">④ AIサービスの契約</span>：入力を学習などに使わないと約束しているか<ul class="sub"><li>例：Gemini APIの有料枠は、製品改善に使わないと規約に明記</li><li>無料枠や個人のアカウントでは満たさない</li></ul></li><li><span class="label">⑤ 事業者とサーバの国</span>：海外か<ul class="sub"><li>海外なら、本人への情報提供や同意など、追加の手続きが要ることがある</li></ul></li><li><span class="label">⑥ 団体の承認</span>：責任者が了解し、記録を残したか</li><li class="then">①〜⑥がすべて「はい」なら渡してよい。一つでも不明なら渡さない<ul class="sub"><li>名前などを伏せると、漏れたときの影響を小さくできる</li><li>判断に迷うときは、法律の専門家に確認する</li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>委託先に渡せるなら、AIにも渡せるか</h2><div class="body">
+<ul class="points"><li>考え方は近い：外に預け、決めた目的の範囲だけで扱ってもらう<ul class="sub"><li>委託：利用目的の範囲内なら本人の同意は不要。ただし委託先を監督する義務がある（法27条5項1号、法25条）</li><li>クラウド：事業者がデータを取り扱わない契約なら「提供」に当たらない（Q&A 7-53）</li></ul></li><li>ただし自動的には同じにならない<ul class="sub"><li>契約書の「委託先」に、AIサービスが含まれるとは限らない</li><li>AI事業者が学習などに使わない契約か、別に確かめる</li><li>海外の事業者・サーバなら追加の手続きが要ることがある（法28条、Q&A 10-25・12-3）</li><li>生成AIが「取り扱わない」に当たるかは、Q&Aに明記がない</li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>判定基準の根拠（1/2）</h2><div class="body">
 <ul class="points"><li>個人情報保護委員会「生成AIサービスの利用に関する注意喚起等」2023年6月2日<ul class="sub"><li>「特定された当該個人情報の利用目的を達成するために必要な範囲内であることを十分に確認すること」</li><li>「あらかじめ本人の同意を得ることなく…個人データを含むプロンプトを入力し、当該個人データが当該プロンプトに対する応答結果の出力以外の目的で取り扱われる場合…個人情報保護法の規定に違反することとなる可能性がある」</li></ul></li><li>Gemini API 追加利用規約（2026年3月23日発効）<ul class="sub"><li>無料枠："Do not submit sensitive, confidential, or personal information to the Unpaid Services."</li><li>有料枠："Google doesn't use your prompts ... or responses to improve our products"</li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>判定基準の根拠（2/2）</h2><div class="body">
+<ul class="points"><li>個人情報保護法（令和8年11月2日施行の版で確認）<ul class="sub"><li>第2条第3項：要配慮個人情報＝「人種、信条、社会的身分、病歴、犯罪の経歴、犯罪により害を被った事実」など</li><li>第18条第1項：「利用目的の達成に必要な範囲を超えて、個人情報を取り扱ってはならない」</li><li>第27条第5項第1号：利用目的の範囲内で「取扱いの全部又は一部を委託することに伴って」提供される場合は第三者に当たらない</li></ul></li><li>個人情報保護委員会「ガイドラインに関するQ&A」（令和8年10月30日更新）<ul class="sub"><li>Q7-53：クラウド事業者が「個人データを取り扱わないこととなっている場合」は提供に当たらない。例：「契約条項によって…取り扱わない旨が定められており、適切にアクセス制御を行っている場合」</li><li>Q10-25：その場合も、外国の制度を把握した安全管理措置と、サーバの所在国などを本人に示すことが必要</li></ul></li></ul>
 </div></section>
 
 <section class="slide"><h2>一人ではまだやらないこと（1/3）</h2><div class="body">
