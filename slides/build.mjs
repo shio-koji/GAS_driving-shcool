@@ -79,7 +79,7 @@ function parseBlocks(lines, ctx) {
     if (img) {
       const [, alt, src] = img;
       out.push(existsSync(join(DIR, src))
-        ? `<img${cls('shot', imgCls)} src="${src}" alt="${alt}">`
+        ? `<img${cls('shot', imgCls)} src="${src}" alt="${alt}" onerror="this.style.display='none'">`
         : `<div${cls('shot', 'placeholder', imgCls)}>画像：${inline(alt)}<small>${src} を置くと表示されます</small></div>`);
       i++;
       continue;
@@ -289,12 +289,13 @@ function terms(lines) {
   }).join('') + '</div>';
 }
 
-const OPTION = /^<!--\s*(title|section|chapter|pill|tight)\b/;
+const OPTION = /^<!--\s*(title|section|chapter|group|pill|tight)\b/;
 
 function renderSlide(chunk) {
   const opts = {};
   const lines = [];
   for (const l of chunk.split('\n')) {
+    if (/^\s*<!--.*-->\s*\S/.test(l)) throw new Error(`設定のコメントの後ろに文字があります。改行してください: 「${l}」`);
     const m = l.trim().match(/^<!--\s*([\w-]+)(?:\s*:\s*(.*?))?\s*-->$/);
     if (m) opts[m[1]] = m[2] ?? true;
     else lines.push(l);
@@ -316,7 +317,7 @@ function renderSlide(chunk) {
   }
   if (h1) throw new Error('「# 」は title / section のスライドでだけ使えます');
 
-  const chapter = opts.chapter ? ` data-chapter="${opts.chapter}"` : '';
+  const chapter = (opts.chapter ? ` data-chapter="${opts.chapter}"` : '') + (opts.group ? ` data-group="${opts.group}"` : '');
   const pill = opts.pill ? `<span class="pill">${opts.pill}</span>` : '';
   return `<section${cls('slide', opts.tight && 'tight')}${chapter}>`
     + pill

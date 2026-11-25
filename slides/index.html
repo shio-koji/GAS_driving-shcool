@@ -132,6 +132,43 @@
   .terms b { font-size: 19px; }
   .terms span { color: var(--sub); }
 
+  /* イラスト用の部品（画面・コード・アイコン） */
+  .mock-window { border: 2px solid var(--line); border-radius: 12px; background: #fff; overflow: hidden; }
+  .mock-window .bar { height: 26px; background: var(--soft); display: flex; gap: 6px; align-items: center; padding: 0 10px; }
+  .mock-window .bar i { width: 10px; height: 10px; border-radius: 50%; background: #c9c9ce; display: inline-block; }
+  .mock-window .content { padding: 14px 16px; display: flex; gap: 18px; align-items: flex-start; }
+  .mock-btns { display: flex; gap: 8px; }
+  .mock-btns span { font-size: 15px; padding: 4px 12px; border-radius: 6px; background: var(--accent); color: #fff; font-weight: 700; }
+  .mock-btns span.sub { background: var(--soft); color: var(--ink); }
+  .file { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 14px; color: var(--sub); }
+  .file svg { width: 40px; height: 50px; }
+  .menu { border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.08); font-size: 15px; background: #fff; overflow: hidden; }
+  .menu div { padding: 4px 14px; }
+  .menu .on { background: var(--accent); color: #fff; }
+  .mock-code { background: #1d1d1f; color: #e6e6e6; font-family: var(--mono); border-radius: 10px; padding: 12px 16px; font-size: 16px; line-height: 1.6; white-space: pre; text-align: left; }
+  .mock-code .k { color: #7fb4ff; } .mock-code .s { color: #f2b36f; } .mock-code .c { color: #8a8a8e; }
+  .wrap-outer { border: 3px solid var(--accent); background: var(--accent-soft); border-radius: 16px; padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 12px; }
+  .wrap-inner { border-radius: 12px; background: var(--ink); padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 8px; }
+  .wrap-label { font-size: 18px; font-weight: 700; color: var(--accent); }
+  .wrap-label.light { color: #fff; }
+  .wrap-label small { font-weight: 400; font-size: 15px; margin-left: 8px; opacity: .8; }
+  .icon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .icon-tile { background: var(--soft); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 18px; font-weight: 700; }
+  .icon-tile svg { width: 72px; height: 72px; }
+  .icon-tile small { font-size: 14px; font-weight: 400; color: var(--sub); }
+  .nest { border: 2px solid var(--accent); border-radius: 14px; padding: 12px 16px; background: var(--accent-soft); }
+  .nest > .t { font-size: 18px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+
+  .zoom { border: 2px dashed var(--accent); border-radius: 16px; padding: 12px 14px; background: #fff; }
+  .zoom-label { font-size: 15px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+  .mini-row { display: flex; align-items: stretch; gap: 8px; }
+  .mini-ipo { flex: 1; border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 10px; background: var(--soft); display: flex; flex-direction: column; gap: 4px; }
+  .mini-ipo .h { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+  .mini-ipo .r { font-size: 13px; line-height: 1.4; display: flex; gap: 6px; }
+  .mini-ipo .r b { flex: none; width: 3em; color: var(--accent); }
+  .mini-ipo .r.mid b { color: var(--sub); }
+  .mini-arrow { align-self: center; font-size: 20px; color: var(--sub); flex: none; }
+
   /* 画像 */
   .shot { display: block; width: 100%; max-height: 380px; object-fit: contain; border-radius: 12px; }
   .shot.short { max-height: 230px; }
@@ -179,47 +216,94 @@
 </div></section>
 
 <section class="slide" data-chapter="導入"><h2>今日の流れ</h2><div class="body">
-<ol class="nums"><li><div>コンピュータとプログラム</div></li><li><div>GASとは何か</div></li><li><div>最初のプロンプトの型</div></li><li><div>実演：AIと一緒に動かしてみる</div></li><li><div>GASを使う段取りと、AIの使いどころ</div></li><li><div>まとめと次の一歩</div></li></ol>
+<ol class="nums"><li><div>コンピュータとプログラム</div></li><li><div>GASとは何か</div></li><li><div>プログラムをAIに書いてもらう</div></li><li><div>実演：AIと一緒に動かしてみる</div></li><li><div>GASを使う段取りと、安全に使うために</div></li><li><div>まとめと、もっと知りたい人へ</div></li></ol>
 </div></section>
 
 <section class="slide section"><div class="no">1</div><h1>コンピュータとプログラム</h1></section>
 
 <section class="slide"><h2>PCはすべてプログラムで動いている</h2><div class="body">
-<div class="cols"><div class="col"><ul class="points"><li>どの操作も、裏でプログラムが動いている<ul class="sub"><li>アプリを開く・保存する・メールを送る</li></ul></li><li>ボタンは、プログラムを呼び出す入口<ul class="sub"><li>ボタンで並べ替えても、プログラムで並べ替えても結果は同じ</li></ul></li></ul></div><div class="col"><div class="grid g1 compact"><div class="card"><div class="label">ボタンで並べ替え（GUI）</div><h3>データ › シートを並べ替え › A→Z</h3><div class="shot placeholder mini">画像：スプレッドシートの「データ」メニュー<small>images/01-sort-menu.png を置くと表示されます</small></div></div><div class="card"><div class="label">プログラムで並べ替え（GAS）※読まなくてOK</div><div class="code">SpreadsheetApp.getActiveSheet().sort(1);</div></div></div></div></div>
+<div class="cols"><div class="col"><ul class="points"><li>どの操作も、裏でプログラムが動いている<ul class="sub"><li>例：ファイルをコピー → 別のフォルダに貼り付け → 開く → 文言を書き換えて保存</li></ul></li><li>マウスとキーボードの操作は、プログラムを呼び出す入口<ul class="sub"><li>同じ手順は、命令を書いても実行できる（右の下）</li><li>マウスでやっても、命令でやっても結果は同じ</li></ul></li></ul></div><div class="col"><div style="display:flex; flex-direction:column; gap:10px">
+  <div class="mock-window">
+    <div class="bar"><i></i><i></i><i></i></div>
+    <div class="content" style="gap:12px; align-items:center; font-size:14px">
+      <div class="file" style="font-size:12px"><svg viewBox="0 0 40 50"><path d="M3 2h22l12 12v34H3z" fill="#fff" stroke="#2557d6" stroke-width="2.5"/><path d="M25 2v12h12" fill="none" stroke="#2557d6" stroke-width="2.5"/><path d="M9 24h22M9 31h22M9 38h13" stroke="#9db0e0" stroke-width="2.5"/></svg>報告書.txt</div>
+      <div style="display:flex; flex-direction:column; gap:4px">
+        <div>① 右クリック › コピー</div>
+        <div>② 「保存用」フォルダに貼り付け</div>
+        <div>③ ダブルクリックで開く</div>
+        <div>④ 「4月」を<b style="color:var(--accent)">「5月」</b>に書き換えて保存</div>
+      </div>
+    </div>
+  </div>
+  <div class="note" style="text-align:center">↓ 同じことを命令で書くと（読まなくてOK）</div>
+  <div class="mock-code" style="font-size:13px"><span class="k">import</span> shutil
+<span class="c"># ①② コピーして、保存用フォルダに貼り付け</span>
+shutil.copy(<span class="s">"報告書.txt"</span>, <span class="s">"保存用/報告書.txt"</span>)
+<span class="c"># ③ 開いて、中身を読む</span>
+text = open(<span class="s">"保存用/報告書.txt"</span>).read()
+<span class="c"># ④ 「4月」を「5月」に書き換えて保存</span>
+open(<span class="s">"保存用/報告書.txt"</span>, <span class="s">"w"</span>).write(text.replace(<span class="s">"4月"</span>, <span class="s">"5月"</span>))</div>
+</div></div></div>
 </div></section>
 
 <section class="slide"><h2>GUIのおかげで意識せずに済む</h2><div class="body">
-<div class="cols"><div class="col"><ul class="points"><li>GUI＝画面を見て操作するための仕組み<ul class="sub"><li>ボタンやメニューなど</li></ul></li><li>GUIがプログラムを使いやすい形に<span class="em">包んでいる</span><ul class="sub"><li>例：ボタンを押すと、裏でプログラムが動く</li></ul></li></ul>
-<div class="flow">
-  <div class="node dim">あなた</div>
-  <div class="arrow">→</div>
-  <div class="node accent" style="padding:14px 28px">
-    GUI<small>ボタン・メニュー</small>
-    <div class="node" style="margin-top:8px; padding:10px 20px; background:var(--ink); color:#fff; border-color:var(--ink)">プログラム</div>
+<div class="cols"><div class="col"><ul class="points"><li>GUI＝画面を見て操作するための仕組み<ul class="sub"><li>ボタンやメニューなど</li></ul></li><li>GUIがプログラムを使いやすい形に<span class="em">包んでいる</span><ul class="sub"><li>例：「保存」ボタンを押すと、裏で保存のプログラムが動く</li></ul></li></ul></div><div class="col"><div class="wrap-outer">
+  <div class="wrap-label">GUI<small>ボタン・メニュー</small></div>
+  <div class="mock-window">
+    <div class="bar"><i></i><i></i><i></i></div>
+    <div class="content"><div class="mock-btns"><span>保存</span><span class="sub">コピー</span><span class="sub">送信</span></div></div>
   </div>
-</div></div><div class="col"><div class="shot placeholder">画像：普段使っているGUIの画面（例：スプレッドシート）<small>images/02-gui.png を置くと表示されます</small></div></div></div>
+  <div class="wrap-inner">
+    <div class="wrap-label light">プログラム<small>コード</small></div>
+    <div class="mock-code"><span class="k">function</span> save() {
+  file.write(data);
+}</div>
+  </div>
+</div></div></div>
 </div></section>
 
 <section class="slide"><h2>GUIはレトルト、プログラミングは手作り</h2><div class="body">
-<ul class="points"><li><span class="label">レトルトカレー＝GUI</span><ul class="sub"><li>用意された商品から選んで温めるだけで手軽</li><li>用意されたもの以外は作れない</li></ul></li><li><span class="label">手作りカレー＝プログラミング</span><ul class="sub"><li>材料と手順を自分で組み合わせ、こだわれる</li><li>作り方を指示する必要がある</li></ul></li><li>レトルトも誰かの手作り<ul class="sub"><li>普段使うアプリも、誰かがプログラミングして作ったもの</li></ul></li></ul>
+<div class="cols"><div class="col"><ul class="points"><li><span class="label">レトルトカレー＝GUI</span><ul class="sub"><li>用意された商品から選んで温めるだけで手軽</li><li>用意されたもの以外は作れない</li></ul></li><li><span class="label">手作りカレー＝プログラミング</span><ul class="sub"><li>材料と手順を自分で組み合わせ、こだわれる</li><li>作り方を指示する必要がある</li></ul></li><li>レトルトも誰かの手作り<ul class="sub"><li>普段使うアプリも、誰かがプログラミングして作ったもの</li></ul></li></ul></div><div class="col"><div class="wrap-outer">
+  <div class="wrap-label">レトルトカレー＝GUI<small>包み</small></div>
+  <div class="mock-window">
+    <div class="bar"><i></i><i></i><i></i></div>
+    <div class="content"><div class="mock-btns"><span>保存</span><span class="sub">コピー</span><span class="sub">送信</span></div></div>
+  </div>
+  <div class="wrap-inner">
+    <div class="wrap-label light">手作りカレー＝プログラム<small>中身</small></div>
+    <div class="mock-code"><span class="k">function</span> save() {
+  file.write(data);
+}</div>
+  </div>
+</div></div></div>
 </div></section>
 
 <section class="slide section"><div class="no">2</div><h1>GASとは何か</h1></section>
 
 <section class="slide"><h2>プログラミングに必要なもの</h2><div class="body">
-<ul class="points"><li><span class="em">言語</span>：指示を書く言葉<ul class="sub"><li>JavaScript、Pythonなど多数</li></ul></li><li><span class="em">エディタ</span>：コードを書くための専用のメモ帳</li><li><span class="em">実行環境</span>：プログラムを動かす場所<ul class="sub"><li>自分のPC、または遠くのサーバー（中身はコンピュータ）</li></ul></li><li><span class="em">操作できる対象</span>：ファイル、Webサービス、機器など</li><li>普通はこれらを自分でそろえる<ul class="sub"><li>インストールや設定が必要</li></ul></li></ul>
+<div class="cols wide"><div class="col"><ul class="points"><li><span class="em">言語</span>：指示を書く言葉<ul class="sub"><li>JavaScript、Pythonなど多数</li></ul></li><li><span class="em">エディタ</span>：コードを書くための専用のメモ帳</li><li><span class="em">実行環境</span>：プログラムを動かす場所<ul class="sub"><li>自分のPC、または遠くのサーバー（中身はコンピュータ）</li></ul></li><li><span class="em">操作できる対象</span>：ファイル、Webサービス、機器など</li><li>普通はこれらを自分でそろえる<ul class="sub"><li>インストールや設定が必要</li></ul></li></ul></div><div class="col"><div class="icon-grid">
+  <div class="icon-tile"><svg viewBox="0 0 72 72"><rect x="6" y="10" width="60" height="40" rx="10" fill="#fff" stroke="#2557d6" stroke-width="3"/><path d="M22 50l-6 12 16-12" fill="#fff" stroke="#2557d6" stroke-width="3" stroke-linejoin="round"/><text x="36" y="37" text-anchor="middle" font-family="Menlo,monospace" font-size="18" font-weight="700" fill="#2557d6">{ }</text></svg>言語<small>指示を書く言葉</small></div>
+  <div class="icon-tile"><svg viewBox="0 0 72 72"><rect x="12" y="6" width="44" height="58" rx="5" fill="#fff" stroke="#2557d6" stroke-width="3"/><path d="M20 20h28M20 29h28M20 38h20M20 47h24" stroke="#9db0e0" stroke-width="3"/><path d="M50 46l12-12 5 5-12 12-7 2z" fill="#2557d6"/></svg>エディタ<small>書くためのメモ帳</small></div>
+  <div class="icon-tile"><svg viewBox="0 0 72 72"><rect x="4" y="12" width="38" height="28" rx="4" fill="#fff" stroke="#2557d6" stroke-width="3"/><path d="M16 48h14M23 40v8" stroke="#2557d6" stroke-width="3"/><rect x="48" y="10" width="20" height="13" rx="3" fill="#fff" stroke="#2557d6" stroke-width="3"/><rect x="48" y="27" width="20" height="13" rx="3" fill="#fff" stroke="#2557d6" stroke-width="3"/><rect x="48" y="44" width="20" height="13" rx="3" fill="#fff" stroke="#2557d6" stroke-width="3"/><circle cx="53" cy="16.5" r="1.8" fill="#2557d6"/><circle cx="53" cy="33.5" r="1.8" fill="#2557d6"/><circle cx="53" cy="50.5" r="1.8" fill="#2557d6"/><text x="23" y="68" text-anchor="middle" font-size="9" fill="#6e6e73">PC</text><text x="58" y="68" text-anchor="middle" font-size="9" fill="#6e6e73">サーバー</text></svg>実行環境<small>動かす場所</small></div>
+  <div class="icon-tile"><svg viewBox="0 0 72 72"><path d="M6 14h16l8 8v22H6z" fill="#fff" stroke="#2557d6" stroke-width="3"/><rect x="36" y="16" width="30" height="22" rx="3" fill="#fff" stroke="#2557d6" stroke-width="3"/><path d="M36 18l15 11 15-11" fill="none" stroke="#2557d6" stroke-width="3"/><path d="M20 64a10 10 0 0 1 2-20 14 14 0 0 1 27 3 9 9 0 0 1 1 17z" fill="#fff" stroke="#2557d6" stroke-width="3"/></svg>操作対象<small>ファイル・メールなど</small></div>
+</div></div></div>
 </div></section>
 
 <section class="slide"><h2>GASの場合</h2><div class="body">
-<ul class="points"><li>必要なものが全部ブラウザの中にそろっている<ul class="sub"><li><span class="em">言語</span>：JavaScript</li><li><span class="em">エディタ</span>：Apps Scriptエディタ（ブラウザで開く）</li><li><span class="em">実行環境</span>：Googleのサーバー</li></ul></li><li>操作できるのはGoogleのサービス<ul class="sub"><li>スプレッドシート、Gmail、Drive、カレンダー、フォームなど</li></ul></li><li class="then">準備は不要</li></ul>
+<div class="cols wide"><div class="col"><ul class="points"><li>必要なものが全部ブラウザの中にそろっている<ul class="sub"><li><span class="em">言語</span>：JavaScript</li><li><span class="em">エディタ</span>：Apps Scriptエディタ（ブラウザで開く）</li><li><span class="em">実行環境</span>：Googleのサーバー</li></ul></li><li>操作できるのはGoogleのサービス<ul class="sub"><li>スプレッドシート、Gmail、Drive、カレンダー、フォームなど</li></ul></li><li class="then">準備は不要</li></ul></div><div class="col"><div class="icon-grid">
+  <div class="icon-tile"><svg viewBox="0 0 72 72"><rect x="6" y="10" width="60" height="40" rx="10" fill="#fff" stroke="#2557d6" stroke-width="3"/><path d="M22 50l-6 12 16-12" fill="#fff" stroke="#2557d6" stroke-width="3" stroke-linejoin="round"/><text x="36" y="37" text-anchor="middle" font-family="Menlo,monospace" font-size="18" font-weight="700" fill="#2557d6">{ }</text></svg>言語<small>JavaScript</small></div>
+  <div class="icon-tile"><svg viewBox="0 0 72 72"><rect x="12" y="6" width="44" height="58" rx="5" fill="#fff" stroke="#2557d6" stroke-width="3"/><path d="M20 20h28M20 29h28M20 38h20M20 47h24" stroke="#9db0e0" stroke-width="3"/><path d="M50 46l12-12 5 5-12 12-7 2z" fill="#2557d6"/></svg>エディタ<small>Apps Scriptエディタ</small></div>
+  <div class="icon-tile"><svg viewBox="0 0 72 72"><rect x="4" y="12" width="38" height="28" rx="4" fill="#fff" stroke="#2557d6" stroke-width="3"/><path d="M16 48h14M23 40v8" stroke="#2557d6" stroke-width="3"/><rect x="48" y="10" width="20" height="13" rx="3" fill="#fff" stroke="#2557d6" stroke-width="3"/><rect x="48" y="27" width="20" height="13" rx="3" fill="#fff" stroke="#2557d6" stroke-width="3"/><rect x="48" y="44" width="20" height="13" rx="3" fill="#fff" stroke="#2557d6" stroke-width="3"/><circle cx="53" cy="16.5" r="1.8" fill="#2557d6"/><circle cx="53" cy="33.5" r="1.8" fill="#2557d6"/><circle cx="53" cy="50.5" r="1.8" fill="#2557d6"/><text x="23" y="68" text-anchor="middle" font-size="9" fill="#6e6e73">PC</text><text x="58" y="68" text-anchor="middle" font-size="9" fill="#6e6e73">サーバー</text></svg>実行環境<small>Googleのサーバー</small></div>
+  <div class="icon-tile"><svg viewBox="0 0 72 72"><path d="M6 14h16l8 8v22H6z" fill="#fff" stroke="#2557d6" stroke-width="3"/><rect x="36" y="16" width="30" height="22" rx="3" fill="#fff" stroke="#2557d6" stroke-width="3"/><path d="M36 18l15 11 15-11" fill="none" stroke="#2557d6" stroke-width="3"/><path d="M20 64a10 10 0 0 1 2-20 14 14 0 0 1 27 3 9 9 0 0 1 1 17z" fill="#fff" stroke="#2557d6" stroke-width="3"/></svg>操作対象<small>Googleのサービス</small></div>
+</div></div></div>
 </div></section>
 
 <section class="slide"><h2>GASの見取り図</h2><div class="body">
-<ul class="points"><li>きっかけを受けてプログラムが動き、Googleの各サービスを読み書きする</li><li>すべて「誰かの権限」の範囲で動く</li></ul>
-<div style="border:2px dashed var(--line); border-radius:20px; padding:40px 36px 32px; position:relative">
+<ul class="points"><li>プログラムは「きっかけ」で動き出す<ul class="sub"><li>今日のきっかけは、エディタの「実行」ボタン</li></ul></li><li>動いたプログラムが、Googleの各サービスを読み書きする</li><li>すべて「誰かの権限」の範囲で動く</li></ul>
+<div style="border:2px dashed var(--line); border-radius:20px; padding:28px 32px 22px; position:relative">
   <div class="note" style="position:absolute; top:-18px; left:28px; background:#fff; padding:0 12px">誰かの権限の範囲</div>
   <div class="flow">
-    <div class="node">きっかけ</div>
+    <div class="node">きっかけ<small>実行ボタン</small></div>
     <div class="arrow">→</div>
     <div class="node accent">プログラム</div>
     <div class="arrow">⇄<small style="display:block; font-size:16px">読む・書く</small></div>
@@ -231,31 +315,53 @@
 </div>
 </div></section>
 
-<section class="slide"><h2>きっかけ：誰が、いつ動かすか</h2><div class="body">
-<ul class="points"><li>きっかけは主に3種類<ul class="sub"><li>手動で実行（今日はこれだけ）</li><li>決まった時刻（毎朝9時など）</li><li>フォームの送信（回答が来たときなど）</li></ul></li><li>GASではこれを<span class="em">「トリガー」</span>と呼ぶ</li></ul>
-</div></section>
-
 <section class="slide"><h2>誰として動くか</h2><div class="body">
-<ul class="points"><li>実行した人（または設定した人）の<span class="em">権限</span>で動く<ul class="sub"><li>その人が触れるものには、プログラムも触れる</li></ul></li></ul>
+<div class="cols text"><div class="col"><ul class="points"><li>実行した人（または設定した人）の<span class="em">権限</span>で動く<ul class="sub"><li>その人が触れるものには、プログラムも触れる</li></ul></li><li>良い面：自分ができることは、そのまま任せられる<ul class="sub"><li>例：編集できるシートなら、プログラムも書き込める</li></ul></li><li>注意点：自分が触れるものは全部、プログラムも触れる<ul class="sub"><li>例：自分のGmail全体、共有ドライブの大事なファイル</li><li>AIのコードが、意図しないものを書き換えることもある</li></ul></li><li class="then">権限の扱いが大事（詳しくは 5-5 権限）</li></ul></div><div class="col"><div class="nest" style="padding:18px">
+  <div class="t">あなたが触れる範囲</div>
+  <div class="chips" style="gap:8px">
+    <span class="chip" style="font-size:16px; padding:6px 14px">自分のGmail</span>
+    <span class="chip" style="font-size:16px; padding:6px 14px">編集できるシート</span>
+    <span class="chip" style="font-size:16px; padding:6px 14px">共有ドライブ</span>
+    <span class="chip" style="font-size:16px; padding:6px 14px">カレンダー</span>
+  </div>
+  <div class="note" style="margin-top:12px; text-align:center; color:var(--accent); font-weight:700">＝ プログラムが触れる範囲</div>
+</div></div></div>
 </div></section>
 
-<section class="slide"><h2>できること・制約</h2><div class="body">
-<ul class="points"><li><span class="label">できること</span><ul class="sub"><li>転記、メールの作成、ファイルの整理、定期実行</li><li>Slack連携（今回は紹介のみ）</li></ul></li><li><span class="label">制約</span><ul class="sub"><li>1回あたりの実行時間に上限がある</li><li>1日あたりのメール送信数に上限がある</li></ul></li></ul>
-</div></section>
+<section class="slide section"><div class="no">3</div><h1>プログラムをAIに書いてもらう</h1></section>
 
-<section class="slide section"><div class="no">3</div><h1>最初のプロンプトの型</h1></section>
-
-<section class="slide"><h2>まず一度動かしてみる</h2><div class="body">
-<ul class="points"><li>言葉からプログラムを作り、実際に動かす</li><li>完璧な依頼文はいらない<ul class="sub"><li>最低限の型で始める</li></ul></li></ul>
-</div></section>
-
-<section class="slide"><h2>伝えるのは「入力」と「出力」</h2><div class="body">
-<ul class="points"><li><span class="em">入力</span>：どこから、何を読むか</li><li><span class="em">出力</span>：どこへ、どんな形で出すか</li><li>その間の「変換」はAIが考える<ul class="sub"><li>カレーなら、材料と完成形を伝えれば作り方はAIが考える</li></ul></li></ul>
+<section class="slide"><h2>最初の型は「入力」と「出力」</h2><div class="body">
+<ul class="points"><li>どんなプログラムも「入力 → 変換 → 出力」でできている<ul class="sub"><li><span class="em">入力</span>：どこから、何を読むか　／　<span class="em">出力</span>：どこへ、どんな形で出すか</li><li><span class="em">変換</span>：入力を出力に変える処理</li></ul></li><li>人が決めるのは、入力と出力だけでいい<ul class="sub"><li>変換はAIが考える。カレーなら、材料と完成形を伝えれば作り方はAIが考える</li></ul></li><li>完璧な依頼文はいらない。この型で、まず一度動かしてみる</li></ul>
 <div class="flow"><div class="node accent wide">入力<small>どこから、何を読むか</small></div><div class="arrow">→</div><div class="node ghost wide">変換<small>AIが考える</small></div><div class="arrow">→</div><div class="node accent wide">出力<small>どこへ、どんな形で出すか</small></div></div>
 </div></section>
 
-<section class="slide"><h2>入力と出力は「場所」まで具体的に</h2><div class="body">
-<ul class="points"><li>ファイル › シート › 列 まで書く<ul class="sub"><li>例：「支援者リスト」の「4月」シートのB列（名前）</li></ul></li><li>出力は<span class="em">完成見本を1つ</span>見せると伝わる</li></ul>
+<section class="slide"><h2>大きな仕組みも、入れ子の「入力→変換→出力」</h2><div class="body">
+<ul class="points"><li>変換の中も、小さな「入力→変換→出力」に分けられる<ul class="sub"><li>前の処理の出力が、次の処理の入力になる</li></ul></li><li>システムやプログラムの多くは、この入れ子で説明できる<ul class="sub"><li>あとでAIにコードを説明させるときにも、この見方を使う</li></ul></li></ul>
+<div style="display:flex; flex-direction:column; gap:8px">
+  <div class="flow small" style="gap:10px">
+    <div class="node accent">入力<small>シートの一覧</small></div><div class="arrow">→</div>
+    <div class="node" style="border-color:var(--accent); border-style:dashed">変換<small>▼ 下で拡大</small></div><div class="arrow">→</div>
+    <div class="node accent">出力<small>Gmailの下書き</small></div>
+  </div>
+  <div class="zoom">
+    <div class="zoom-label">変換の中を拡大すると</div>
+    <div class="mini-row">
+    <div class="mini-ipo"><div class="h">① 一覧を読む</div>
+      <div class="r"><b>入力</b>シートの一覧</div><div class="r mid"><b>変換</b>1行ずつに分ける</div><div class="r"><b>出力</b>1行分のデータ</div></div>
+      <div class="mini-arrow">→</div>
+    <div class="mini-ipo"><div class="h">② 文面を作る</div>
+      <div class="r"><b>入力</b>1行分のデータ（宛先・名前）</div><div class="r mid"><b>変換</b>見本の文面に当てはめる</div><div class="r"><b>出力</b>メールの文面</div></div>
+      <div class="mini-arrow">→</div>
+    <div class="mini-ipo"><div class="h">③ 下書きにする</div>
+      <div class="r"><b>入力</b>宛先と文面</div><div class="r mid"><b>変換</b>Gmailに渡す</div><div class="r"><b>出力</b>下書き</div></div>
+    </div>
+  </div>
+</div>
+</div></section>
+
+<section class="slide"><h2>例：今日の実演の入力と出力</h2><div class="body">
+<ul class="points"><li>今日の実演：一覧から、連絡メールの下書きを作る<ul class="sub"><li><span class="em">入力</span>：スプレッドシートの一覧（A列：宛先、B列：名前）</li><li><span class="em">出力</span>：一人ずつのGmailの下書き（宛名入り）</li></ul></li><li>入力と出力は「場所」まで具体的に書く<ul class="sub"><li>どのファイルの、どのシートの、どの列か。出力は完成見本を1つ見せる</li></ul></li><li>送信ではなく下書きにするのは、間違えても取り返しがつくから</li></ul>
+<div class="flow"><div class="node accent wide">入力<small>シートの一覧</small></div><div class="arrow">→</div><div class="node ghost wide">変換<small>AIが考える</small></div><div class="arrow">→</div><div class="node accent wide">出力<small>Gmailの下書き</small></div></div>
 </div></section>
 
 <section class="slide"><h2>ただし「決まりごと」は書く</h2><div class="body">
@@ -263,13 +369,13 @@
 </div></section>
 
 <section class="slide"><h2>決まりごとを書かないと</h2><div class="body">
-<div class="cols"><div class="col"><ul class="points"><li>決まりごとの有無で、AIの結果が変わる<ul class="sub"><li>なし：C列（用件）が空欄でも、空っぽの下書きができる</li><li>あり：空欄の行は飛ばされる</li></ul></li></ul>
-<table class="mini"><tr><th>A 宛先</th><th>B 名前</th><th>C 用件</th></tr><tr><td>tanaka@…</td><td>田中</td><td>資料送付のお願い</td></tr><tr><td>sato@…</td><td>佐藤</td><td>（空欄）</td></tr><tr><td>suzuki@…</td><td>鈴木</td><td>面談日程の確認</td></tr></table></div><div class="col"><div class="grid g1 compact"><div class="card warn"><h3>決まりごと なし</h3><div class="rows"><div class="draft">田中様 ／ 用件：資料送付のお願い</div><div class="draft bad">佐藤様 ／ 用件：<span class="warn">（空っぽのまま）</span></div><div class="draft">鈴木様 ／ 用件：面談日程の確認</div></div></div><div class="card accent"><h3>「C列が空欄なら飛ばす」あり</h3><div class="rows"><div class="draft">田中様 ／ 用件：資料送付のお願い</div><div class="draft">鈴木様 ／ 用件：面談日程の確認</div></div></div></div></div></div>
+<div class="cols"><div class="col"><ul class="points"><li>決まりごとの有無で、AIの結果が変わる<ul class="sub"><li>なし：A列（宛先）が空欄でも、宛先のない下書きができる</li><li>あり：空欄の行は飛ばされる</li></ul></li></ul>
+<table class="mini"><tr><th>A 宛先</th><th>B 名前</th></tr><tr><td>tanaka@…</td><td>田中</td></tr><tr><td>（空欄）</td><td>佐藤</td></tr><tr><td>suzuki@…</td><td>鈴木</td></tr></table></div><div class="col"><div class="grid g1 compact"><div class="card warn"><h3>決まりごと なし</h3><div class="rows"><div class="draft">宛先：tanaka@… ／ 田中様</div><div class="draft bad">宛先：<span class="warn">（空っぽのまま）</span> ／ 佐藤様</div><div class="draft">宛先：suzuki@… ／ 鈴木様</div></div></div><div class="card accent"><h3>「A列が空欄なら飛ばす」あり</h3><div class="rows"><div class="draft">宛先：tanaka@… ／ 田中様</div><div class="draft">宛先：suzuki@… ／ 鈴木様</div></div></div></div></div></div>
 </div></section>
 
 <section class="slide"><h2>実演で使う依頼文</h2><div class="body">
 <ul class="points"><li>型に当てはめると、こうなる</li></ul>
-<div class="prompt"><p>Google Apps Scriptで書いてください。</p><p><span class="em">入力：</span>スプレッドシート「○○」の A列（宛先）・B列（名前）・C列（用件）</p><p><span class="em">出力：</span>Gmailの下書き（送信はしない）。文面の見本：</p><p class="sample">田中様<br>ご用件：資料送付のお願い　について、ご連絡いたします。</p><p><span class="em">決まりごと：</span>C列が空欄の行は飛ばす</p></div>
+<div class="prompt"><p>Google Apps Scriptで書いてください。</p><p><span class="em">入力：</span>スプレッドシート「○○」の A列（宛先）・B列（名前）</p><p><span class="em">出力：</span>Gmailの下書き（送信はしない）。文面の見本：</p><p class="sample">田中様<br>いつもご支援いただき、ありがとうございます。（以下、全員共通の本文）</p><p><span class="em">決まりごと：</span>A列（宛先）が空欄の行は飛ばす</p></div>
 </div></section>
 
 <section class="slide section"><div class="no">4</div><h1>実演：AIと一緒に動かしてみる</h1></section>
@@ -281,6 +387,10 @@
 <section class="slide"><span class="pill">実演</span><h2>依頼文をAIに渡し、コードを受け取る</h2><div class="body">
 <ul class="points"><li>AIに依頼して、コードを受け取る<ul class="sub"><li>3章の依頼文をそのまま渡す</li><li>返ってきたコードを丸ごとコピーする</li></ul></li></ul>
 <div class="shot placeholder short">画像：AIに依頼文を渡して、コードが返ってきた画面<small>images/03-ai-chat.png を置くと表示されます</small></div>
+</div></section>
+
+<section class="slide"><h2>Apps Scriptエディタの開き方</h2><div class="body">
+<div class="cols text"><div class="col"><ul class="points"><li>スプレッドシートから開く（今日はこちら）<ul class="sub"><li>スプレッドシートを開き、メニューの「拡張機能」›「Apps Script」</li><li>そのシートに紐づいたプロジェクトが開く</li></ul></li><li>単独で開く<ul class="sub"><li>script.google.com を開き、「新しいプロジェクト」</li></ul></li></ul></div><div class="col"><div class="shot placeholder">画像：スプレッドシートの「拡張機能」メニュー<small>images/09-open-editor.png を置くと表示されます</small></div></div></div>
 </div></section>
 
 <section class="slide"><h2>Apps Scriptエディタの見方</h2><div class="body">
@@ -298,31 +408,37 @@
 </div></section>
 
 <section class="slide"><span class="pill">実演</span><h2>結果を確認する</h2><div class="body">
-<ul class="points"><li>決まりごとどおりにできたか確かめる<ul class="sub"><li>Gmailの「下書き」を開く</li><li>C列が空欄の行は飛ばされているか</li></ul></li></ul>
+<ul class="points"><li>決まりごとどおりにできたか確かめる<ul class="sub"><li>Gmailの「下書き」を開く</li></ul></li></ul>
 <div class="shot placeholder short">画像：Gmailの「下書き」に並んだメール<small>images/06-gmail-drafts.png を置くと表示されます</small></div>
 </div></section>
 
 <section class="slide"><h2>AIに中身を説明してもらう</h2><div class="body">
-<ul class="points"><li>AIに説明させると、全体をつかめる<ul class="sub"><li>例：「入力・変換・出力に分けて説明して」と頼む</li></ul></li><li>ただし正しさは<span class="em">結果で</span>確かめる<ul class="sub"><li>説明は全体をつかむためのもの</li></ul></li></ul>
+<ul class="points"><li>構造をつかむ頼み方<ul class="sub"><li>「このコードを入力・変換・出力に分けて説明して。変換の部分は、さらに入力・変換・出力の入れ子に分けて」</li></ul></li><li>ほかにも便利な頼み方<ul class="sub"><li>「全体の流れを図（フローチャート）で示して」</li><li>「このコードが読む・書く・消す・送るものを一覧にして」</li><li>「失敗しそうな場面と、そのとき何が起きるかを教えて」</li><li>「実行する前に確かめるべき点を挙げて」</li></ul></li><li>ただし正しさは<span class="em">結果で</span>確かめる<ul class="sub"><li>説明は全体をつかむためのもの</li></ul></li></ul>
 </div></section>
 
-<section class="slide section"><div class="no">5</div><h1>GASを使う段取りと、<br>AIの使いどころ</h1></section>
+<section class="slide section"><div class="no">5</div><h1>GASを使う段取りと、<br>安全に使うために</h1></section>
 
-<section class="slide"><h2>GASを使う段取り</h2><div class="body">
+<section class="slide" data-group="5-1 段取り"><h2>GASを使う段取り</h2><div class="body">
 <ul class="points"><li><span class="label">上流</span>：何を作るか決める<ul class="sub"><li>①業務を選ぶ　②入力と出力を決める　③依頼文を書く</li></ul></li><li><span class="label">下流</span>：作って、動かして、直す<ul class="sub"><li>④コードを作ってもらう　⑤貼り付けて実行　⑥結果を確かめる　⑦直す　⑧定期実行で運用</li></ul></li></ul>
 <div class="grid g4 steps"><div class="card accent"><div class="label">① 上流</div><h3>業務を選ぶ</h3></div><div class="card accent"><div class="label">② 上流</div><h3>入力と出力を決める</h3></div><div class="card accent"><div class="label">③ 上流</div><h3>依頼文を書く</h3></div><div class="card"><div class="label">④ 下流</div><h3>コードを作ってもらう</h3></div><div class="card"><div class="label">⑤ 下流</div><h3>貼り付けて実行</h3></div><div class="card"><div class="label">⑥ 下流</div><h3>結果を確かめる</h3></div><div class="card"><div class="label">⑦ 下流</div><h3>直す</h3></div><div class="card"><div class="label">⑧ 下流</div><h3>定期実行で運用</h3></div></div>
 </div></section>
 
-<section class="slide"><h2>どの工程でもAIに聞ける</h2><div class="body">
-<div class="cols"><div class="col"><ul class="points"><li><span class="em">迷ったらAIに聞く。これに尽きる。AIの奴隷になろう！！！！</span><ul class="sub"><li>下流も上流も、右のように聞けばいい</li></ul></li><li><span class="label">上流</span>の判断は人の役割。でも判断材料はAIに出してもらえる<ul class="sub"><li>例：「この業務、自動化できそう？」</li></ul></li></ul></div><div class="col"><div class="rows"><div class="row up"><span class="k">①</span><span>「この業務、自動化できそう？」</span></div><div class="row up"><span class="k">②</span><span>「入力と出力を整理するのを手伝って」</span></div><div class="row up"><span class="k">③</span><span>「この依頼文で足りないことはある？」</span></div><div class="row"><span class="k">⑤</span><span>「どこに貼ればいい？どう実行する？」</span></div><div class="row"><span class="k">⑥</span><span>「テスト用のダミーデータを作って」</span></div><div class="row"><span class="k">⑦</span><span>「このエラーはどういう意味？」</span></div><div class="row"><span class="k">⑧</span><span>「毎朝9時に動かすにはどうする？」</span></div></div></div></div>
+<section class="slide" data-group="5-2 AIとの付き合い方"><h2>どの工程でもAIに聞ける</h2><div class="body">
+<div class="cols"><div class="col"><ul class="points"><li><span class="em">迷ったらAIに聞く。これに尽きる。AIの奴隷になろう！！！！</span><ul class="sub"><li>下流も上流も、右のように聞けばいい</li><li>「自分はAIの奴隷になっているのでは？」と思えてきたら一人前（笑）</li></ul></li><li><span class="label">上流</span>の判断は人の役割。でも判断材料はAIに出してもらえる<ul class="sub"><li>例：「この業務、自動化できそう？」</li></ul></li></ul>
+<img class="shot" src="images/sns-physical-ai.png" alt="「claudeに言われるがままに買い物をして…ワイがフィジカルAIや」（Xの投稿）" onerror="this.style.display='none'"></div><div class="col"><div class="rows"><div class="row up"><span class="k">①</span><span>「この業務、自動化できそう？」</span></div><div class="row up"><span class="k">②</span><span>「入力と出力を整理するのを手伝って」</span></div><div class="row up"><span class="k">③</span><span>「この依頼文で足りないことはある？」</span></div><div class="row"><span class="k">⑤</span><span>「どこに貼ればいい？どう実行する？」</span></div><div class="row"><span class="k">⑥</span><span>「テスト用のダミーデータを作って」</span></div><div class="row"><span class="k">⑦</span><span>「このエラーはどういう意味？」</span></div><div class="row"><span class="k">⑧</span><span>「毎朝9時に動かすにはどうする？」</span></div></div></div></div>
 </div></section>
 
-<section class="slide"><h2>ただし決める・確かめるは人</h2><div class="body">
-<ul class="points"><li>AIに任せきれないことが4つある<ul class="sub"><li>何を作るかを<span class="em">決める</span></li><li>権限を<span class="em">承認する</span></li><li>結果が正しいかを<span class="em">確かめる</span></li><li>AIに渡してよい情報かを<span class="em">判断する</span></li></ul></li></ul>
+<section class="slide"><h2>AIの言っていることを、AIに聞いて理解する（1/2）</h2><div class="body">
+<ul class="points"><li>AIの説明が分からなければ、そのままAIに聞き返す<ul class="sub"><li>「初心者でも分かるように言い直して」</li><li>「このシステムを理解するのに必要な基礎の単語や概念をリストアップして、説明して」</li><li>「このコード全体の流れを、図を使って説明して」</li></ul></li><li>コツ：AIの画面を最低2つ並べて開く<ul class="sub"><li>片方で作業し、もう片方で分からないことを聞く</li></ul></li></ul>
 </div></section>
 
-<section class="slide"><h2>結果で確かめる</h2><div class="body">
-<ul class="points"><li>コードを読めなくても、結果で正しさを確かめられる<ul class="sub"><li>期待する結果を先に決めておく</li><li>少量のダミーデータで試す</li></ul></li></ul>
+<section class="slide"><h2>AIの言っていることを、AIに聞いて理解する（2/2）</h2><div class="body">
+<ul class="points"><li>分かるようになるほど、AIの間違いに気づける<ul class="sub"><li>AIは間違えることもある。理解する力が、確かめる力になる</li></ul></li><li>根拠：経験のある開発者も、分からないコードをAIに説明させている<ul class="sub"><li>「仕組みが分からなかったので、GPT-3に聞いた」（"I could not figure out how it works. So I asked GPT-3."）</li><li>「言うことは何でも信じられるわけではない。ペダルのこぎ方は自分で知っておく必要がある」（"You can't trust anything it says" / "You still have to know how to pedal!"）</li><li>出典：Simon Willison「Using GPT-3 to explain how code works」2022年7月</li></ul></li></ul>
+</div></section>
+
+<section class="slide" data-group="5-3 結果の確かめ方"><h2>人がやること：決める・確かめる</h2><div class="body">
+<ul class="points"><li>AIに任せきれないことが4つある<ul class="sub"><li>何を作るかを<span class="em">決める</span>、権限を<span class="em">承認する</span></li><li>結果が正しいかを<span class="em">確かめる</span>、AIに渡してよい情報かを<span class="em">判断する</span></li></ul></li><li>特に大事なのは、結果が正しいかを確かめること<ul class="sub"><li>出力が正しいと確かめられれば、変換（コード）の中身は気にしなくていい</li><li>期待する結果を先に決め、少量のダミーデータで試す</li><li>空欄・重複など、いろいろな入力で試すほど安心</li></ul></li></ul>
+<div class="flow"><div class="node accent wide">入力<small>ダミーデータ</small></div><div class="arrow">→</div><div class="node ghost wide">変換<small>中身は見なくていい</small></div><div class="arrow">→</div><div class="node accent wide">出力<small>ここを確かめる</small></div></div>
 </div></section>
 
 <section class="slide"><h2>エラーは日常</h2><div class="body">
@@ -331,24 +447,36 @@
 <div class="shot placeholder short">画像：実行ログに出たエラーメッセージ<small>images/07-error.png を置くと表示されます</small></div>
 </div></section>
 
-<section class="slide"><h2>出力には2種類ある</h2><div class="body">
-<ul class="points"><li><span class="label">表示するだけ</span><ul class="sub"><li>画面やログに出す</li></ul></li><li><span class="label">外の世界を変える</span><ul class="sub"><li>メール送信・シートへの書き込み・ファイルの削除など</li><li>取り返しがつかないものもある</li></ul></li><li>変える出力は、まず<span class="em">下書き・コピー・バックアップ</span>で試す</li></ul>
+<section class="slide" data-group="5-4 自動で動かす"><h2>きっかけ（トリガー）の種類</h2><div class="body">
+<ul class="points"><li>プログラムは「きっかけ」があって初めて動く。GASではトリガーと呼ぶ</li><li><span class="label">実行ボタン（手動）</span>：人が押したときに動く<ul class="sub"><li>例：エディタの「実行」、シートに置いたボタンやメニュー</li></ul></li><li><span class="label">スケジュール（時間主導型）</span>：決まった時刻・間隔で動く<ul class="sub"><li>例：毎朝9時に、近い期日をSlackに知らせる</li></ul></li><li><span class="label">イベント駆動</span>：何かが起きたときに動く<ul class="sub"><li>例：フォームが送信されたとき、シートが編集されたとき</li></ul></li><li class="then">自動で動くものは、設定した人の権限で動く。止め方も決めておく</li></ul>
+</div></section>
+
+<section class="slide" data-group="5-5 権限"><h2>権限の基本（読む・書く・消す・実行する）</h2><div class="body">
+<div class="cols"><div class="col"><ul class="points"><li><span class="label">read（読む）</span>：中身を見るだけ。何も変わらない<ul class="sub"><li>例：シートの値を読む、メールを検索する</li></ul></li><li><span class="label">write（書く）</span>：中身を作る・変える<ul class="sub"><li>例：シートに書き込む、メールの下書きを作る</li></ul></li><li><span class="label">delete（消す）</span>：消す。元に戻せないことがある<ul class="sub"><li>例：行・ファイル・メールを消す</li></ul></li></ul></div><div class="col"><ul class="points"><li><span class="label">execute（実行する）</span>：プログラムを動かす<ul class="sub"><li>例：GASのスクリプトを実行する</li></ul></li><li><span class="label">＋α</span>：外への操作や、権限の管理<ul class="sub"><li>例：メールを送る、共有設定を変える</li></ul></li><li class="then">権限は必要な分だけにするほど安全<ul class="sub"><li>例：読むだけなら「閲覧者」で足りる</li></ul></li><li class="then">read以外は外の世界を変える<ul class="sub"><li>まず下書き・コピー・バックアップで試す</li></ul></li></ul></div></div>
+</div></section>
+
+<section class="slide"><h2>権限の種類</h2><div class="body">
+<ul class="points"><li><span class="label">ファイルの共有権限</span>：人がファイルに何をできるか<ul class="sub"><li>閲覧者・閲覧者（コメント可）・編集者・オーナー</li><li>プログラムは、実行する人が触れるファイルにしか触れない</li></ul></li><li><span class="label">スクリプトの権限（スコープ）</span>：プログラムに何を許すか<ul class="sub"><li>初回の承認画面で許可する（例：スプレッドシートの編集、Gmailの送信）</li></ul></li><li><span class="label">実行する人</span>：誰の権限で動くか<ul class="sub"><li>手動なら実行した人、トリガーなら設定した人</li><li>Webアプリは「自分」か「アクセスしているユーザー」を選ぶ</li></ul></li><li><span class="label">公開範囲</span>：Webアプリを誰が使えるか<ul class="sub"><li>自分のみ／組織内の全員／Googleアカウントを持つ全員／全員</li></ul></li></ul>
 </div></section>
 
 <section class="slide"><h2>権限と機密情報</h2><div class="body">
 <ul class="points"><li>許可する前、AIに渡す前に確かめる<ul class="sub"><li>承認画面で何へのアクセスを求めているか</li><li>依頼者の個人情報・事件の情報は<span class="warn">AIに貼らない</span></li></ul></li></ul>
 </div></section>
 
-<section class="slide"><h2>個人情報をAIに渡すときの判定基準</h2><div class="body">
+<section class="slide" data-group="5-6 個人情報"><h2>個人情報をAIに渡すときの判定基準</h2><div class="body">
 <ul class="points"><li><span class="label">ライン1 学習に使われないか</span>：サービスとプランで決まる<ul class="sub"><li>例：Gemini APIの無料枠は製品改善に使われ、人が読むこともある。有料枠は使われない</li></ul></li><li><span class="label">ライン2 外に出してよい情報か</span>：利用目的と本人の同意で決まる<ul class="sub"><li>集めたときの利用目的の範囲内か</li><li>本人の同意なく、出力以外の目的（学習など）で扱われるサービスに入れていないか</li></ul></li><li class="then">どちらかに不安があれば入れない<ul class="sub"><li>名前を伏せる、ダミーに置き換える、責任者に相談する</li></ul></li></ul>
 </div></section>
 
-<section class="slide"><h2>有料版AIに渡してよいかのチェック（1/2）</h2><div class="body">
-<ul class="points"><li><span class="label">① 情報の種類</span>：要配慮個人情報が含まれていないか<ul class="sub"><li>病歴、犯罪の経歴、犯罪の被害を受けた事実、信条、社会的身分など（法2条3項）</li><li>含まれるなら、原則として渡さない</li></ul></li><li><span class="label">② 利用目的</span>：集めたときに示した目的の範囲内か<ul class="sub"><li>確かめる文書：プライバシーポリシー、申込フォームの同意文、委任契約書</li><li>例：「活動の連絡のため」に集めたメールアドレスで、連絡文を作る → 範囲内</li></ul></li><li><span class="label">③ 契約・同意の文言</span>：外部サービスに預けることが許されているか<ul class="sub"><li>「業務委託先に提供することがある」「外部サービスで処理する」などの記載</li><li>秘密保持の条項で、第三者への開示が禁じられていないか</li></ul></li></ul>
+<section class="slide"><h2>有料版AIに渡してよいかのチェック（1/3）</h2><div class="body">
+<ul class="points"><li><span class="label">① 情報の種類</span>：要配慮個人情報が含まれていないか<ul class="sub"><li>病歴、犯罪の経歴、犯罪の被害を受けた事実、信条、社会的身分など</li><li>含まれるなら、原則として渡さない</li><li>根拠：個人情報保護法 第2条第3項</li></ul></li><li><span class="label">② 利用目的</span>：集めたときに示した目的の範囲内か<ul class="sub"><li>確かめる文書：プライバシーポリシー、申込フォームの同意文、委任契約書</li><li>例：「活動の連絡のため」に集めたメールアドレスで、連絡文を作る → 範囲内</li><li>根拠：個人情報保護法 第18条第1項、個人情報保護委員会の注意喚起（1）①</li></ul></li></ul>
 </div></section>
 
-<section class="slide"><h2>有料版AIに渡してよいかのチェック（2/2）</h2><div class="body">
-<ul class="points"><li><span class="label">④ AIサービスの契約</span>：入力を学習などに使わないと約束しているか<ul class="sub"><li>例：Gemini APIの有料枠は、製品改善に使わないと規約に明記</li><li>無料枠や個人のアカウントでは満たさない</li></ul></li><li><span class="label">⑤ 事業者とサーバの国</span>：海外か<ul class="sub"><li>海外なら、本人への情報提供や同意など、追加の手続きが要ることがある</li></ul></li><li><span class="label">⑥ 団体の承認</span>：責任者が了解し、記録を残したか</li><li class="then">①〜⑥がすべて「はい」なら渡してよい。一つでも不明なら渡さない<ul class="sub"><li>名前などを伏せると、漏れたときの影響を小さくできる</li><li>判断に迷うときは、法律の専門家に確認する</li></ul></li></ul>
+<section class="slide"><h2>有料版AIに渡してよいかのチェック（2/3）</h2><div class="body">
+<ul class="points"><li><span class="label">③ 契約・同意の文言</span>：外部サービスに預けることが許されているか<ul class="sub"><li>「業務委託先に提供することがある」「外部サービスで処理する」などの記載</li><li>秘密保持の条項で、第三者への開示が禁じられていないか</li><li>根拠：個人情報保護法 第27条第1項（本人の同意）・第5項第1号（委託）。秘密保持は各契約書による</li></ul></li><li><span class="label">④ AIサービスの契約</span>：入力を学習などに使わないと約束しているか<ul class="sub"><li>例：Gemini APIの有料枠は、製品改善に使わないと規約に明記</li><li>無料枠や個人のアカウントでは満たさない</li><li>根拠：個人情報保護委員会の注意喚起（1）②、Gemini API 追加利用規約</li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>有料版AIに渡してよいかのチェック（3/3）</h2><div class="body">
+<ul class="points"><li><span class="label">⑤ 事業者とサーバの国</span>：海外か<ul class="sub"><li>海外なら、本人への情報提供や同意など、追加の手続きが要ることがある</li><li>根拠：個人情報保護法 第28条第1項、個人情報保護委員会 Q&A 10-25・12-3</li></ul></li><li><span class="label">⑥ 団体の承認</span>：責任者が了解し、記録を残したか<ul class="sub"><li>根拠：個人情報保護法 第23条（安全管理措置）</li></ul></li></ul>
 </div></section>
 
 <section class="slide"><h2>委託先に渡せるなら、AIにも渡せるか</h2><div class="body">
@@ -363,7 +491,11 @@
 <ul class="points"><li>個人情報保護法（令和8年11月2日施行の版で確認）<ul class="sub"><li>第2条第3項：要配慮個人情報＝「人種、信条、社会的身分、病歴、犯罪の経歴、犯罪により害を被った事実」など</li><li>第18条第1項：「利用目的の達成に必要な範囲を超えて、個人情報を取り扱ってはならない」</li><li>第27条第5項第1号：利用目的の範囲内で「取扱いの全部又は一部を委託することに伴って」提供される場合は第三者に当たらない</li></ul></li><li>個人情報保護委員会「ガイドラインに関するQ&A」（令和8年10月30日更新）<ul class="sub"><li>Q7-53：クラウド事業者が「個人データを取り扱わないこととなっている場合」は提供に当たらない。例：「契約条項によって…取り扱わない旨が定められており、適切にアクセス制御を行っている場合」</li><li>Q10-25：その場合も、外国の制度を把握した安全管理措置と、サーバの所在国などを本人に示すことが必要</li></ul></li></ul>
 </div></section>
 
-<section class="slide"><h2>一人ではまだやらないこと（1/3）</h2><div class="body">
+<section class="slide"><h2>世の中の社用AIは、どう成り立っているか</h2><div class="body">
+<ul class="points"><li><span class="label">法人向けのプランを契約する</span><ul class="sub"><li>入力を学習に使わないこと、データの扱いを契約で約束してもらう</li><li>例：Google Workspace の Gemini、ChatGPT の法人向けプラン（Business・Enterprise）</li></ul></li><li><span class="label">社内ガイドラインで、使ってよいツールと入れてよい情報を決める</span><ul class="sub"><li>例：公開情報はOK／社外秘は法人向けのツールだけ／個人情報は原則入れない</li><li>個人で契約したAIや無料版は、業務では使わない</li></ul></li><li><span class="label">ひな形をもとにルールを作る</span><ul class="sub"><li>例：日本ディープラーニング協会「生成AIの利用ガイドライン」（2023年5月公開、無料）</li></ul></li><li class="then">グレーゾーンを一人ひとりに判断させず、組織として決めている<ul class="sub"><li>出典：Google「Generative AI in Google Workspace Privacy Hub」、OpenAI「Business data privacy, security, and compliance」</li></ul></li></ul>
+</div></section>
+
+<section class="slide" data-group="5-7 一人ではまだやらないこと"><h2>一人ではまだやらないこと（1/3）</h2><div class="body">
 <ul class="points"><li><span class="warn">他人に届く処理を、いきなり本番で</span>（一斉メール送信、Slackへの投稿など）<ul class="sub"><li>理由：届いたものは取り消せない。間違いが大勢に広がる</li><li>やってよい条件：自分宛てや少人数のテストで何度か確かめたら</li></ul></li><li><span class="warn">共有のファイルを直接いじる</span>（チームのシートやフォルダ）<ul class="sub"><li>理由：壊すと自分だけの問題では済まない</li><li>やってよい条件：コピーで確かめ、持ち主の了解を得たら</li></ul></li><li><span class="warn">削除・上書きをする処理</span><ul class="sub"><li>理由：元に戻せないことがある</li><li>やってよい条件：バックアップを取り、戻し方（版の履歴・ゴミ箱）を確かめたら</li></ul></li></ul>
 </div></section>
 
@@ -375,51 +507,52 @@
 <ul class="points"><li><span class="warn">黙って自動で動かし続ける</span>（トリガーでの定期実行）<ul class="sub"><li>理由：作った人しか止め方・直し方を知らない状態になる</li><li>やってよい条件：動く内容・時刻・止め方を書き残し、引き継げる人ができたら</li></ul></li><li><span class="warn">複数人で同時に、同じGASを編集する</span><ul class="sub"><li>理由：誰が何を変えたか分からなくなり、他の人の変更を上書きすることがある</li><li>やってよい条件：Git／GitHubで変更の履歴を管理できるようになったら</li></ul></li><li>迷ったら、詳しい人に一度見てもらう</li></ul>
 </div></section>
 
-<section class="slide section"><div class="no">6</div><h1>まとめと次の一歩</h1></section>
-
-<section class="slide"><h2>今日のまとめ</h2><div class="body">
-<ol class="nums"><li><div>PCはプログラムで動いている。GUIはそれを包んでいる</div></li><li><div>GASは、Googleのサービスを自分の権限で動かすプログラム</div></li><li><div>依頼の型は「入力」と「出力」（＋決まりごと）</div></li><li><div>迷ったらAIに聞く。決める・確かめるは人</div></li></ol>
-</div></section>
-
-<section class="slide"><h2>tips：入れ子で伝える</h2><div class="body">
-<ul class="points"><li>細かく調整したいときは、変換を小さく分けて伝える<ul class="sub"><li>例：未処理の行を選ぶ → 文面を作る → 下書きにする</li><li>それぞれが小さな「入力 → 変換 → 出力」</li></ul></li><li>根拠：一度に頼みすぎると、AIは混乱しがち<ul class="sub"><li>"If you ask for too much in one go, it's likely to get confused or produce a "jumbled mess" that's hard to untangle."</li><li>出典：Addy Osmani「My LLM coding workflow going into 2026」2026年1月（執筆当時 Google）</li></ul></li></ul>
-</div></section>
-
-<section class="slide"><h2>tips：向いている業務</h2><div class="body">
+<section class="slide" data-group="5-8 向いている業務"><h2>向いている業務</h2><div class="body">
 <ul class="points"><li>向いている業務の特徴<ul class="sub"><li>繰り返しがある</li><li>ルールが決まっている</li><li>Googleのサービス内で完結する</li></ul></li><li>根拠：ルールが決まった定型業務は自動化の代表例<ul class="sub"><li>「ルールやフローが決まっていて、処理に人の判断が不要な定型業務は、RPAで自動化できる代表的な仕事です。」</li><li>出典：NTT東日本「RPAに向いている・向いていない業務10選」2026年3月更新（RPAの話だが、GASにも当てはまる）</li></ul></li></ul>
 </div></section>
 
-<section class="slide"><h2>tips：AIと人が両方編集できる中間物を作る</h2><div class="body">
-<ul class="points"><li>AIの成果物を直したいときは、AIも人も編集できる形を間に挟む<ul class="sub"><li>例：このスライドもMarkdownの原稿から作っている</li></ul></li><li>根拠：MarkdownはAIとやりとりする共通語になっている<ul class="sub"><li>"Plain text won. As the lingua franca for interacting with LLMs, Markdown is now ubiquitous."</li><li>出典：Jorge Arango「The Resurgence of Plain Text in the Age of AI」2024年12月</li></ul></li></ul>
-<div class="flow small"><div class="node accent">中間物<small>Markdownなど</small></div><div class="arrow">→</div><div class="node">完成品<small>スライド・HTML</small></div></div>
-</div></section>
+<section class="slide section"><div class="no">6</div><h1>まとめと、<br>もっと知りたい人へ</h1></section>
 
-<section class="slide"><h2>tips：AIの言っていることを、AIに聞いて理解する</h2><div class="body">
-<ul class="points"><li>AIの説明が分からなければ、そのままAIに聞き返す<ul class="sub"><li>例：「この言葉はどういう意味？」「小学生にも分かるように言い直して」</li><li>例：「このコードの3行目は何をしている？」</li></ul></li><li>分かるようになるほど、AIの間違いに気づける<ul class="sub"><li>AIは間違えることもある。理解する力が、確かめる力になる</li></ul></li><li>根拠：経験のある開発者も、分からないコードをAIに説明させている<ul class="sub"><li>「仕組みが分からなかったので、GPT-3に聞いた」（"I could not figure out how it works. So I asked GPT-3."）</li><li>「言うことは何でも信じられるわけではない。ペダルのこぎ方は自分で知っておく必要がある」（"You can't trust anything it says" / "You still have to know how to pedal!"）</li><li>出典：Simon Willison「Using GPT-3 to explain how code works」2022年7月</li></ul></li></ul>
-</div></section>
-
-<section class="slide"><h2>tips：ルールベースとLLMベース</h2><div class="body">
-<ul class="points"><li><span class="label">ルールベース</span>：決めた規則どおりに処理する<ul class="sub"><li>入力の形が厳格（決まった列、決まった書式）</li><li>同じ入力なら、いつも同じ結果</li><li>例：GASで書いた普通のプログラム</li></ul></li><li><span class="label">LLMベース</span>：LLM（大規模言語モデル）が文脈から判断して処理する<ul class="sub"><li>曖昧な入力も扱える（自由記述、表記ゆれ）</li><li>結果が毎回少し変わり、間違うこともある</li><li>例：ChatGPT・Gemini・Claudeの中身がLLM</li></ul></li><li class="then">決まった処理はルールベース、曖昧な判断はLLMベースが向く</li></ul>
-</div></section>
-
-<section class="slide"><h2>tips：LLMにプログラムを書かせるか、直接やらせるか</h2><div class="body">
-<ul class="points"><li><span class="label">LLMにプログラムを書かせて実行する</span><ul class="sub"><li>LLMが働くのは書くときだけ。動く処理はルールベース</li><li>何度実行しても同じ結果。大量・定期の処理に向く</li><li>処理するデータをLLMに渡さずに済む</li></ul></li><li><span class="label">LLMに直接やらせる</span>（チャットにデータを貼って頼む、など）<ul class="sub"><li>毎回LLMが判断する。曖昧なものに強い</li><li>結果は毎回変わりうる。1回ずつの作業に向く</li><li>処理するデータをLLMに渡すことになる</li></ul></li><li class="then">今日の講座は前者（プログラムを書かせる）</li></ul>
-</div></section>
-
-<section class="slide"><h2>tips：処理の途中でLLMを使う</h2><div class="body">
-<ul class="points"><li>GASの処理の一部だけをLLMに任せられる<ul class="sub"><li>例：フォームの自由記述を、Gemini APIで分類・要約してシートに書く</li><li>決まった部分はルールベース、曖昧な部分だけLLM</li></ul></li><li>GASからGemini APIに文章を送り、結果を受け取る<ul class="sub"><li>APIキーが必要（スクリプトプロパティに保管する）</li></ul></li><li><span class="warn">個人情報を含む文章を送るときは、特に注意</span><ul class="sub"><li>送った文章はGoogleに渡る。無料枠では製品改善や人のレビューに使われうる</li><li>送る前に「個人情報をAIに渡すときの判定基準」で判断する</li></ul></li></ul>
-</div></section>
-
-<section class="slide"><h2>tips：権限の基本（読む・書く・消す）</h2><div class="body">
-<ul class="points"><li><span class="label">read（読み取り）</span>：中身を見るだけ。何も変わらない<ul class="sub"><li>例：シートの値を読む、メールを検索する</li></ul></li><li><span class="label">write（書き込み・編集）</span>：中身を作る・変える<ul class="sub"><li>例：シートに書き込む、メールの下書きを作る</li></ul></li><li><span class="label">delete（削除）</span>：消す。元に戻せないことがある<ul class="sub"><li>例：行・ファイル・メールを消す</li></ul></li><li><span class="label">その他の操作</span>：外に働きかける<ul class="sub"><li>例：メールを送る（send）、共有設定を変える、プログラムを実行する（execute）</li></ul></li><li class="then">権限は必要な分だけにするほど安全<ul class="sub"><li>例：読むだけの処理なら、ファイルの「閲覧者」で足りる</li></ul></li></ul>
-</div></section>
-
-<section class="slide"><h2>tips：権限の種類</h2><div class="body">
-<ul class="points"><li><span class="label">ファイルの共有権限</span>：人がファイルに何をできるか<ul class="sub"><li>閲覧者・閲覧者（コメント可）・編集者・オーナー</li><li>プログラムは、実行する人が触れるファイルにしか触れない</li></ul></li><li><span class="label">スクリプトの権限（スコープ）</span>：プログラムに何を許すか<ul class="sub"><li>初回の承認画面で許可する（例：スプレッドシートの編集、Gmailの送信）</li></ul></li><li><span class="label">実行する人</span>：誰の権限で動くか<ul class="sub"><li>手動なら実行した人、トリガーなら設定した人</li><li>Webアプリは「自分」か「アクセスしているユーザー」を選ぶ</li></ul></li><li><span class="label">公開範囲</span>：Webアプリを誰が使えるか<ul class="sub"><li>自分のみ／組織内の全員／Googleアカウントを持つ全員／全員</li></ul></li></ul>
+<section class="slide"><h2>今日のまとめ</h2><div class="body">
+<ol class="nums"><li><div>PCはプログラムで動いている。GUIはそれを包んでいる</div></li><li><div>GASは、Googleのサービスを自分の権限で動かすプログラム</div></li><li><div>依頼の型は「入力」と「出力」（＋決まりごと）</div></li><li><div>迷ったらAIに聞く。決める・確かめるは人</div></li><li><div>権限は必要な分だけ。個人情報は判定基準で確かめてから</div></li><li><div>「できる」と知っているだけで、自動化の選択肢が増える</div></li></ol>
 </div></section>
 
 <section class="slide"><h2>次回以降の候補</h2><div class="body">
 <ul class="points"><li>トリガーの設定</li><li>Slack連携</li><li>宿題を題材にした実践</li></ul>
+</div></section>
+
+<section class="slide"><h2>GASでできること・上限</h2><div class="body">
+<ul class="points"><li><span class="label">できること</span>：Googleのサービスを読み書きし、外のサービスともつながる<ul class="sub"><li>スプレッドシート：読み書き、並べ替え、集計／Gmail：検索、下書き、送信</li><li>Drive：ファイルの作成・移動・名前の変更／カレンダー・フォーム：予定の登録、回答の受け取り</li><li>外のサービス：APIを通してSlackなどに投稿</li></ul></li><li><span class="label">上限</span>（無料のGoogleアカウント／Google Workspace）<ul class="sub"><li>1回の実行時間：6分まで（どちらも）</li><li>メールの宛先数：1日100件／1日1,500件</li><li>トリガーで動いた合計時間：1日90分／1日6時間</li><li>出典：Google「Quotas for Google Services」（Apps Script のガイド）</li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>成果の上限は、使う人の知識で決まる（1/2）</h2><div class="body">
+<div class="cols text"><div class="col"><ul class="points"><li>AIを使った成果物の質は、使う人の力に左右される<ul class="sub"><li>大学生100人が、vibe codingでアプリを作った研究</li><li>文章力とCS（情報科学）の成績が高いほど、出来がよかった</li><li>CSの成績は、一般的な認知能力を差し引いても効いていた</li><li>出典：Thorgeirsson, Weidmann, Su「Computer Science Achievement and Writing Skills Predict Vibe Coding Proficiency」CHI 2026（arXiv:2603.14133）</li></ul></li></ul></div><div class="col"><img class="shot" src="images/sns-saru.png" alt="論文を紹介する投稿" onerror="this.style.display='none'"></div></div>
+</div></section>
+
+<section class="slide"><h2>成果の上限は、使う人の知識で決まる（2/2）</h2><div class="body">
+<ul class="points"><li>知らないことは、AIに聞くことすらできない<ul class="sub"><li>「AIから出力を引き出すのに使う自分の知識がボトルネック」「全く知らないことはAIに聞けない」（Xの投稿より）</li></ul></li><li class="then">だから知識を少しずつ増やす。この章の最後の用語集もその入口</li></ul>
+<img class="shot short" src="images/sns-knowledge.png" alt="「自分の知識がボトルネック」の投稿" onerror="this.style.display='none'">
+</div></section>
+
+<section class="slide"><h2>入れ子で伝える</h2><div class="body">
+<ul class="points"><li>細かく調整したいときは、変換を小さく分けて伝える<ul class="sub"><li>例：未処理の行を選ぶ → 文面を作る → 下書きにする</li><li>それぞれが小さな「入力 → 変換 → 出力」</li></ul></li><li>根拠：一度に頼みすぎると、AIは混乱しがち<ul class="sub"><li>"If you ask for too much in one go, it's likely to get confused or produce a "jumbled mess" that's hard to untangle."</li><li>出典：Addy Osmani「My LLM coding workflow going into 2026」2026年1月（執筆当時 Google）</li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>AIと人が両方編集できる中間物を作る</h2><div class="body">
+<ul class="points"><li>AIの成果物を直したいときは、AIも人も編集できる形を間に挟む<ul class="sub"><li>例：このスライドもMarkdownの原稿から作っている</li></ul></li><li>根拠：MarkdownはAIとやりとりする共通語になっている<ul class="sub"><li>"Plain text won. As the lingua franca for interacting with LLMs, Markdown is now ubiquitous."</li><li>出典：Jorge Arango「The Resurgence of Plain Text in the Age of AI」2024年12月</li></ul></li></ul>
+<div class="flow small"><div class="node accent">中間物<small>Markdownなど</small></div><div class="arrow">→</div><div class="node">完成品<small>スライド・HTML</small></div></div>
+</div></section>
+
+<section class="slide"><h2>ルールベースとLLMベース</h2><div class="body">
+<ul class="points"><li><span class="label">ルールベース</span>：決めた規則どおりに処理する<ul class="sub"><li>入力の形が厳格（決まった列、決まった書式）</li><li>同じ入力なら、いつも同じ結果</li><li>例：GASで書いた普通のプログラム</li></ul></li><li><span class="label">LLMベース</span>：LLM（大規模言語モデル）が文脈から判断して処理する<ul class="sub"><li>曖昧な入力も扱える（自由記述、表記ゆれ）</li><li>結果が毎回少し変わり、間違うこともある</li><li>例：ChatGPT・Gemini・Claudeの中身がLLM</li></ul></li><li class="then">決まった処理はルールベース、曖昧な判断はLLMベースが向く</li></ul>
+</div></section>
+
+<section class="slide"><h2>LLMにプログラムを書かせるか、直接やらせるか</h2><div class="body">
+<ul class="points"><li><span class="label">LLMにプログラムを書かせて実行する</span><ul class="sub"><li>LLMが働くのは書くときだけ。動く処理はルールベース</li><li>何度実行しても同じ結果。大量・定期の処理に向く</li><li>処理するデータをLLMに渡さずに済む</li></ul></li><li><span class="label">LLMに直接やらせる</span>（チャットにデータを貼って頼む、など）<ul class="sub"><li>毎回LLMが判断する。曖昧なものに強い</li><li>結果は毎回変わりうる。1回ずつの作業に向く</li><li>処理するデータをLLMに渡すことになる</li></ul></li><li class="then">今日の講座は前者（プログラムを書かせる）</li></ul>
+</div></section>
+
+<section class="slide"><h2>処理の途中でLLMを使う</h2><div class="body">
+<ul class="points"><li>GASの処理の一部だけをLLMに任せられる<ul class="sub"><li>例：フォームの自由記述を、Gemini APIで分類・要約してシートに書く</li><li>決まった部分はルールベース、曖昧な部分だけLLM</li></ul></li><li>GASからGemini APIに文章を送り、結果を受け取る<ul class="sub"><li>APIキーが必要（スクリプトプロパティに保管する）</li></ul></li><li><span class="warn">個人情報を含む文章を送るときは、特に注意</span><ul class="sub"><li>送った文章はGoogleに渡る。無料枠では製品改善や人のレビューに使われうる</li><li>送る前に「個人情報をAIに渡すときの判定基準」で判断する</li></ul></li></ul>
 </div></section>
 
 <section class="slide"><span class="pill">実装例</span><h2>問い合わせが来たらSlackに通知</h2><div class="body">
@@ -462,12 +595,16 @@
 
   // 章扉の見出しを、後続スライドの左上ラベルとして付ける
   let chapter = '';
+  let group = '';
   slides.forEach(s => {
     if (s.classList.contains('section')) {
       chapter = s.querySelector('.no').textContent + '. ' + s.querySelector('h1').textContent;
+      group = '';
       return;
     }
-    const label = s.dataset.chapter || chapter;
+    // <!-- group: 5-1 段取り --> は、次の group か章扉まで続く小見出し
+    if (s.dataset.group) group = s.dataset.group;
+    const label = s.dataset.chapter || (group ? chapter + '　›　' + group : chapter);
     if (label && !s.classList.contains('title')) {
       const el = document.createElement('div');
       el.className = 'chapter';

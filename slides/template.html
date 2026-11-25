@@ -132,6 +132,43 @@
   .terms b { font-size: 19px; }
   .terms span { color: var(--sub); }
 
+  /* イラスト用の部品（画面・コード・アイコン） */
+  .mock-window { border: 2px solid var(--line); border-radius: 12px; background: #fff; overflow: hidden; }
+  .mock-window .bar { height: 26px; background: var(--soft); display: flex; gap: 6px; align-items: center; padding: 0 10px; }
+  .mock-window .bar i { width: 10px; height: 10px; border-radius: 50%; background: #c9c9ce; display: inline-block; }
+  .mock-window .content { padding: 14px 16px; display: flex; gap: 18px; align-items: flex-start; }
+  .mock-btns { display: flex; gap: 8px; }
+  .mock-btns span { font-size: 15px; padding: 4px 12px; border-radius: 6px; background: var(--accent); color: #fff; font-weight: 700; }
+  .mock-btns span.sub { background: var(--soft); color: var(--ink); }
+  .file { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 14px; color: var(--sub); }
+  .file svg { width: 40px; height: 50px; }
+  .menu { border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.08); font-size: 15px; background: #fff; overflow: hidden; }
+  .menu div { padding: 4px 14px; }
+  .menu .on { background: var(--accent); color: #fff; }
+  .mock-code { background: #1d1d1f; color: #e6e6e6; font-family: var(--mono); border-radius: 10px; padding: 12px 16px; font-size: 16px; line-height: 1.6; white-space: pre; text-align: left; }
+  .mock-code .k { color: #7fb4ff; } .mock-code .s { color: #f2b36f; } .mock-code .c { color: #8a8a8e; }
+  .wrap-outer { border: 3px solid var(--accent); background: var(--accent-soft); border-radius: 16px; padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 12px; }
+  .wrap-inner { border-radius: 12px; background: var(--ink); padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 8px; }
+  .wrap-label { font-size: 18px; font-weight: 700; color: var(--accent); }
+  .wrap-label.light { color: #fff; }
+  .wrap-label small { font-weight: 400; font-size: 15px; margin-left: 8px; opacity: .8; }
+  .icon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .icon-tile { background: var(--soft); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 18px; font-weight: 700; }
+  .icon-tile svg { width: 72px; height: 72px; }
+  .icon-tile small { font-size: 14px; font-weight: 400; color: var(--sub); }
+  .nest { border: 2px solid var(--accent); border-radius: 14px; padding: 12px 16px; background: var(--accent-soft); }
+  .nest > .t { font-size: 18px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+
+  .zoom { border: 2px dashed var(--accent); border-radius: 16px; padding: 12px 14px; background: #fff; }
+  .zoom-label { font-size: 15px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+  .mini-row { display: flex; align-items: stretch; gap: 8px; }
+  .mini-ipo { flex: 1; border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 10px; background: var(--soft); display: flex; flex-direction: column; gap: 4px; }
+  .mini-ipo .h { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+  .mini-ipo .r { font-size: 13px; line-height: 1.4; display: flex; gap: 6px; }
+  .mini-ipo .r b { flex: none; width: 3em; color: var(--accent); }
+  .mini-ipo .r.mid b { color: var(--sub); }
+  .mini-arrow { align-self: center; font-size: 20px; color: var(--sub); flex: none; }
+
   /* 画像 */
   .shot { display: block; width: 100%; max-height: 380px; object-fit: contain; border-radius: 12px; }
   .shot.short { max-height: 230px; }
@@ -185,12 +222,16 @@
 
   // 章扉の見出しを、後続スライドの左上ラベルとして付ける
   let chapter = '';
+  let group = '';
   slides.forEach(s => {
     if (s.classList.contains('section')) {
       chapter = s.querySelector('.no').textContent + '. ' + s.querySelector('h1').textContent;
+      group = '';
       return;
     }
-    const label = s.dataset.chapter || chapter;
+    // <!-- group: 5-1 段取り --> は、次の group か章扉まで続く小見出し
+    if (s.dataset.group) group = s.dataset.group;
+    const label = s.dataset.chapter || (group ? chapter + '　›　' + group : chapter);
     if (label && !s.classList.contains('title')) {
       const el = document.createElement('div');
       el.className = 'chapter';
