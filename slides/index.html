@@ -28,7 +28,7 @@
 
   .chapter { position: absolute; top: 36px; left: 96px; font-size: 18px; color: var(--sub); letter-spacing: .02em; }
   h1 { font-size: 64px; line-height: 1.3; margin: 0; font-weight: 700; }
-  h2 { font-size: 44px; line-height: 1.35; margin: 0 0 32px; font-weight: 700; }
+  h2 { font-size: 42px; line-height: 1.35; margin: 0 -96px 28px; padding: 12px 96px 12px 88px; font-weight: 700; background: var(--accent-soft); border-left: 8px solid var(--accent); }
   h3 { font-size: 28px; margin: 0 0 10px; font-weight: 700; }
   p { margin: 0; }
   .body { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; gap: 28px; }
@@ -125,11 +125,11 @@
   .draft { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 8px 14px; font-size: 19px; line-height: 1.5; }
   .draft.bad { border-color: var(--warn); background: var(--warn-soft); }
 
-  .terms { column-count: 2; column-gap: 48px; font-size: 18px; line-height: 1.4; }
+  .terms { column-count: 2; column-gap: 48px; font-size: 17px; line-height: 1.35; }
   .terms .group { font-size: 16px; color: var(--accent); font-weight: 700; margin-top: 10px; break-after: avoid; }
   .terms .newcol { break-before: column; margin-top: 0; }
   .terms .term { break-inside: avoid; margin-top: 4px; }
-  .terms b { font-size: 20px; }
+  .terms b { font-size: 19px; }
   .terms span { color: var(--sub); }
 
   /* 画像 */
@@ -149,7 +149,13 @@
   .code { white-space: pre-wrap; overflow-wrap: anywhere; }
 
   /* 進行状況 */
-  #bar { position: absolute; left: 0; bottom: 0; height: 6px; background: var(--accent); transition: width .2s; }
+  #track { position: absolute; left: 0; right: 0; bottom: 0; height: 18px; cursor: pointer; z-index: 10; }
+  #track::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: var(--line); opacity: 0; transition: opacity .15s, height .15s; }
+  #track:hover::before { opacity: .6; height: 10px; }
+  #bar { position: absolute; left: 0; bottom: 0; height: 6px; background: var(--accent); transition: width .2s, height .15s; pointer-events: none; }
+  #track:hover #bar { height: 10px; }
+  #tip { position: absolute; bottom: 22px; transform: translateX(-50%); background: var(--ink); color: #fff; font-size: 15px; padding: 4px 10px; border-radius: 6px; white-space: nowrap; pointer-events: none; display: none; }
+  #track:hover #tip { display: block; }
   #num { position: absolute; right: 32px; bottom: 22px; font-size: 16px; color: var(--sub); font-variant-numeric: tabular-nums; }
 
   @media print {
@@ -157,7 +163,7 @@
     html, body { overflow: visible; background: #fff; }
     #deck { position: static; transform: none !important; box-shadow: none; height: auto; }
     .slide { display: flex !important; position: relative; height: 720px; page-break-after: always; }
-    #bar, #num { display: none; }
+    #track, #num { display: none; }
   }
 </style>
 </head>
@@ -185,9 +191,9 @@
 <div class="flow">
   <div class="node dim">あなた</div>
   <div class="arrow">→</div>
-  <div class="node accent" style="padding:24px 36px">
+  <div class="node accent" style="padding:14px 28px">
     GUI<small>ボタン・メニュー</small>
-    <div class="node" style="margin-top:12px; background:var(--ink); color:#fff; border-color:var(--ink)">プログラム</div>
+    <div class="node" style="margin-top:8px; padding:10px 20px; background:var(--ink); color:#fff; border-color:var(--ink)">プログラム</div>
   </div>
 </div></div><div class="col"><div class="shot placeholder">画像：普段使っているGUIの画面（例：スプレッドシート）<small>images/02-gui.png を置くと表示されます</small></div></div></div>
 </div></section>
@@ -398,7 +404,7 @@
 <div class="terms"><div class="group">AIの基本</div><div class="term"><b>LLM（大規模言語モデル）</b>　<span>大量の文章から学び、文章を作るAI。ChatGPTなどの中身</span></div><div class="group">書き方の形式</div><div class="term"><b>マークダウン記法</b>　<span>見出しや箇条書きを記号で表す書き方</span></div><div class="term"><b>WYSIWYG</b>　<span>見たままの画面で編集する方式（Googleドキュメントなど）</span></div><div class="group">外部サービスとつなぐ</div><div class="term"><b>API</b>　<span>サービスが外部のプログラム向けに用意した窓口</span></div><div class="term"><b>Webhook</b>　<span>何か起きたら、指定URLへ自動で通知する仕組み</span></div><div class="term"><b>HTTPリクエスト</b>　<span>インターネット越しに依頼を送る通信の仕方</span></div><div class="term"><b>JSON</b>　<span>データをやりとりするときの書き方の形式</span></div><div class="group newcol">鍵と権限</div><div class="term"><b>トークン／APIキー</b>　<span>外部サービスを使うための合言葉</span></div><div class="term"><b>スクリプトプロパティ</b>　<span>合言葉をコードの外に保管する場所</span></div><div class="term"><b>OAuth・スコープ</b>　<span>「何を許可するか」の仕組みと範囲</span></div><div class="group">動かし方・運用</div><div class="term"><b>トリガー（時間主導型・イベント型）</b>　<span>時刻で動くか、出来事で動くか</span></div><div class="term"><b>実行ログ</b>　<span>プログラムが何をしたかの記録</span></div><div class="term"><b>開発環境／本番環境</b>　<span>試すための場所と、実際の業務で使っている場所</span></div><div class="term"><b>コンテナバインド／スタンドアロン</b>　<span>ファイルに紐づくか、単独か</span></div><div class="group">作れるものを広げる</div><div class="term"><b>Webアプリ（デプロイ）</b>　<span>GASの仕組みをURLで公開する</span></div><div class="term"><b>ライブラリ</b>　<span>他の人が作ったGASの部品を再利用する</span></div><div class="term"><b>HTML</b>　<span>Webページの見た目や構造を書く言語（マークアップ言語）</span></div></div>
 </div></section>
 
-<div id="bar"></div>
+<div id="track"><div id="bar"></div><div id="tip"></div></div>
 <div id="num"></div>
 </div>
 
@@ -448,6 +454,31 @@
 
   // 画面の右半分クリックで次へ、左半分で前へ
   addEventListener('click', e => show(e.clientX > innerWidth / 2 ? i + 1 : i - 1));
+
+  // 進行バー：クリックした位置・ドラッグした位置のスライドへ移動する
+  const track = document.getElementById('track');
+  const tip = document.getElementById('tip');
+  const posToSlide = e => {
+    const r = track.getBoundingClientRect();
+    const x = Math.min(Math.max(e.clientX - r.left, 0), r.width - 1);
+    return { k: Math.floor(x / r.width * slides.length), left: x / r.width * 1280 };
+  };
+  let dragging = false;
+  track.addEventListener('pointerdown', e => {
+    e.stopPropagation();
+    dragging = true;
+    track.setPointerCapture(e.pointerId);
+    show(posToSlide(e).k);
+  });
+  track.addEventListener('pointermove', e => {
+    const { k, left } = posToSlide(e);
+    const h = slides[k].querySelector('h2, h1');
+    tip.textContent = (k + 1) + ' / ' + slides.length + (h ? '  ' + h.textContent : '');
+    tip.style.left = Math.min(Math.max(left, 120), 1160) + 'px';
+    if (dragging) show(k);
+  });
+  track.addEventListener('pointerup', () => { dragging = false; });
+  ['click', 'touchstart', 'touchend'].forEach(ev => track.addEventListener(ev, e => e.stopPropagation()));
 
   let touchX = null;
   addEventListener('touchstart', e => { touchX = e.touches[0].clientX; });

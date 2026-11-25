@@ -112,9 +112,9 @@ SpreadsheetApp.getActiveSheet().sort(1);
 <div class="flow">
   <div class="node dim">あなた</div>
   <div class="arrow">→</div>
-  <div class="node accent" style="padding:24px 36px">
+  <div class="node accent" style="padding:14px 28px">
     GUI<small>ボタン・メニュー</small>
-    <div class="node" style="margin-top:12px; background:var(--ink); color:#fff; border-color:var(--ink)">プログラム</div>
+    <div class="node" style="margin-top:8px; padding:10px 20px; background:var(--ink); color:#fff; border-color:var(--ink)">プログラム</div>
   </div>
 </div>
 :::
