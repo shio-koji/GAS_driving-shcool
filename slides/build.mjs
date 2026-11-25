@@ -104,7 +104,11 @@ function parseBlocks(lines, ctx) {
         items.push({ text: l.replace(/^(- |\d+\. )/, ''), sub: [] });
         i++;
       }
-      const sub = it => (it.sub.length ? `<ul class="sub">${it.sub.map(t => `<li>${inline(t)}</li>`).join('')}</ul>` : '');
+      // 「→ 」で始まる項目は、前の項目から導かれる結論として矢印で示す
+      const li = (t, inner = '') => (t.startsWith('→ ')
+        ? `<li class="then">${inline(t.slice(2))}${inner}</li>`
+        : `<li>${inline(t)}${inner}</li>`);
+      const sub = it => (it.sub.length ? `<ul class="sub">${it.sub.map(t => li(t)).join('')}</ul>` : '');
       if (ctx === 'card' && !ordered) {
         out.push(`<div class="rows">${items.map(it => {
           const [text, c] = splitClasses(it.text);
@@ -113,7 +117,7 @@ function parseBlocks(lines, ctx) {
       } else if (ordered) {
         out.push(`<ol class="nums">${items.map(it => `<li><div>${inline(it.text)}${sub(it)}</div></li>`).join('')}</ol>`);
       } else {
-        out.push(`<ul class="points">${items.map(it => `<li>${inline(it.text)}${sub(it)}</li>`).join('')}</ul>`);
+        out.push(`<ul class="points">${items.map(it => li(it.text, sub(it))).join('')}</ul>`);
       }
       continue;
     }

@@ -56,6 +56,8 @@
   ul.sub { margin: 6px 0 0; padding: 0; list-style: none; font-size: 23px; line-height: 1.5; color: #3a3a3c; display: flex; flex-direction: column; gap: 4px; }
   ul.sub li { padding-left: 1.1em; position: relative; }
   ul.sub li::before { content: ""; position: absolute; left: 0; top: .6em; width: 7px; height: 7px; border-radius: 50%; border: 2px solid var(--sub); background: none; }
+  ul.points li.then::before, ul.sub li.then::before { content: "→"; width: auto; height: auto; border: none; border-radius: 0; background: none; top: 0; color: var(--accent); font-weight: 700; }
+  ul.points li.then, ul.sub li.then { padding-left: 1.4em; }
   .label { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 2px; font-weight: 700; }
 
   /* 表紙・章扉 */
@@ -201,7 +203,7 @@
 </div></section>
 
 <section class="slide"><h2>GASの場合</h2><div class="body">
-<ul class="points"><li>必要なものが全部ブラウザの中にそろっている<ul class="sub"><li><span class="em">言語</span>：JavaScript</li><li><span class="em">エディタ</span>：Apps Scriptエディタ（ブラウザで開く）</li><li><span class="em">実行環境</span>：Googleのサーバー</li></ul></li><li>操作できるのはGoogleのサービス<ul class="sub"><li>スプレッドシート、Gmail、Drive、カレンダー、フォームなど</li></ul></li><li>だから準備は不要</li></ul>
+<ul class="points"><li>必要なものが全部ブラウザの中にそろっている<ul class="sub"><li><span class="em">言語</span>：JavaScript</li><li><span class="em">エディタ</span>：Apps Scriptエディタ（ブラウザで開く）</li><li><span class="em">実行環境</span>：Googleのサーバー</li></ul></li><li>操作できるのはGoogleのサービス<ul class="sub"><li>スプレッドシート、Gmail、Drive、カレンダー、フォームなど</li></ul></li><li class="then">準備は不要</li></ul>
 </div></section>
 
 <section class="slide"><h2>GASの見取り図</h2><div class="body">
@@ -329,6 +331,14 @@
 <ul class="points"><li>許可する前、AIに渡す前に確かめる<ul class="sub"><li>承認画面で何へのアクセスを求めているか</li><li>依頼者の個人情報・事件の情報は<span class="warn">AIに貼らない</span></li></ul></li></ul>
 </div></section>
 
+<section class="slide"><h2>個人情報をAIに渡すときの判定基準</h2><div class="body">
+<ul class="points"><li><span class="label">ライン1 学習に使われないか</span>：サービスとプランで決まる<ul class="sub"><li>例：Gemini APIの無料枠は製品改善に使われ、人が読むこともある。有料枠は使われない</li></ul></li><li><span class="label">ライン2 外に出してよい情報か</span>：利用目的と本人の同意で決まる<ul class="sub"><li>集めたときの利用目的の範囲内か</li><li>本人の同意なく、出力以外の目的（学習など）で扱われるサービスに入れていないか</li></ul></li><li class="then">どちらかに不安があれば入れない<ul class="sub"><li>名前を伏せる、ダミーに置き換える、責任者に相談する</li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>判定基準の根拠</h2><div class="body">
+<ul class="points"><li>個人情報保護委員会「生成AIサービスの利用に関する注意喚起等」2023年6月2日<ul class="sub"><li>「特定された当該個人情報の利用目的を達成するために必要な範囲内であることを十分に確認すること」</li><li>「あらかじめ本人の同意を得ることなく…個人データを含むプロンプトを入力し、当該個人データが当該プロンプトに対する応答結果の出力以外の目的で取り扱われる場合…個人情報保護法の規定に違反することとなる可能性がある」</li></ul></li><li>Gemini API 追加利用規約（2026年3月23日発効）<ul class="sub"><li>無料枠："Do not submit sensitive, confidential, or personal information to the Unpaid Services."</li><li>有料枠："Google doesn't use your prompts ... or responses to improve our products"</li></ul></li></ul>
+</div></section>
+
 <section class="slide"><h2>一人ではまだやらないこと（1/3）</h2><div class="body">
 <ul class="points"><li><span class="warn">他人に届く処理を、いきなり本番で</span>（一斉メール送信、Slackへの投稿など）<ul class="sub"><li>理由：届いたものは取り消せない。間違いが大勢に広がる</li><li>やってよい条件：自分宛てや少人数のテストで何度か確かめたら</li></ul></li><li><span class="warn">共有のファイルを直接いじる</span>（チームのシートやフォルダ）<ul class="sub"><li>理由：壊すと自分だけの問題では済まない</li><li>やってよい条件：コピーで確かめ、持ち主の了解を得たら</li></ul></li><li><span class="warn">削除・上書きをする処理</span><ul class="sub"><li>理由：元に戻せないことがある</li><li>やってよい条件：バックアップを取り、戻し方（版の履歴・ゴミ箱）を確かめたら</li></ul></li></ul>
 </div></section>
@@ -360,6 +370,18 @@
 <div class="flow small"><div class="node accent">中間物<small>Markdownなど</small></div><div class="arrow">→</div><div class="node">完成品<small>スライド・HTML</small></div></div>
 </div></section>
 
+<section class="slide"><h2>tips：ルールベースとLLMベース</h2><div class="body">
+<ul class="points"><li><span class="label">ルールベース</span>：決めた規則どおりに処理する<ul class="sub"><li>入力の形が厳格（決まった列、決まった書式）</li><li>同じ入力なら、いつも同じ結果</li><li>例：GASで書いた普通のプログラム</li></ul></li><li><span class="label">LLMベース</span>：LLM（大規模言語モデル）が文脈から判断して処理する<ul class="sub"><li>曖昧な入力も扱える（自由記述、表記ゆれ）</li><li>結果が毎回少し変わり、間違うこともある</li><li>例：ChatGPT・Gemini・Claudeの中身がLLM</li></ul></li><li class="then">決まった処理はルールベース、曖昧な判断はLLMベースが向く</li></ul>
+</div></section>
+
+<section class="slide"><h2>tips：AIにプログラムを書かせるか、直接やらせるか</h2><div class="body">
+<ul class="points"><li><span class="label">AIにプログラムを書かせて実行する</span><ul class="sub"><li>AIが働くのは書くときだけ。動く処理はルールベース</li><li>何度実行しても同じ結果。大量・定期の処理に向く</li><li>処理するデータをAIに渡さずに済む</li></ul></li><li><span class="label">AIに直接やらせる</span>（チャットにデータを貼って頼む、など）<ul class="sub"><li>毎回AIが判断する。曖昧なものに強い</li><li>結果は毎回変わりうる。1回ずつの作業に向く</li><li>処理するデータをAIに渡すことになる</li></ul></li><li class="then">今日の講座は前者（プログラムを書かせる）</li></ul>
+</div></section>
+
+<section class="slide"><h2>tips：処理の途中でLLMを使う</h2><div class="body">
+<ul class="points"><li>GASの処理の一部だけをLLMに任せられる<ul class="sub"><li>例：フォームの自由記述を、Gemini APIで分類・要約してシートに書く</li><li>決まった部分はルールベース、曖昧な部分だけLLM</li></ul></li><li>GASからGemini APIに文章を送り、結果を受け取る<ul class="sub"><li>APIキーが必要（スクリプトプロパティに保管する）</li></ul></li><li><span class="warn">個人情報を含む文章を送るときは、特に注意</span><ul class="sub"><li>送った文章はGoogleに渡る。無料枠では製品改善や人のレビューに使われうる</li><li>送る前に「個人情報をAIに渡すときの判定基準」で判断する</li></ul></li></ul>
+</div></section>
+
 <section class="slide"><h2>次回以降の候補</h2><div class="body">
 <ul class="points"><li>トリガーの設定</li><li>Slack連携</li><li>宿題を題材にした実践</li></ul>
 </div></section>
@@ -373,7 +395,7 @@
 </div></section>
 
 <section class="slide"><h2>発展：知っておくとよい言葉</h2><div class="body">
-<div class="terms"><div class="group">書き方の形式</div><div class="term"><b>マークダウン記法</b>　<span>見出しや箇条書きを記号で表す書き方</span></div><div class="term"><b>WYSIWYG</b>　<span>見たままの画面で編集する方式（Googleドキュメントなど）</span></div><div class="group">外部サービスとつなぐ</div><div class="term"><b>API</b>　<span>サービスが外部のプログラム向けに用意した窓口</span></div><div class="term"><b>Webhook</b>　<span>何か起きたら、指定URLへ自動で通知する仕組み</span></div><div class="term"><b>HTTPリクエスト</b>　<span>インターネット越しに依頼を送る通信の仕方</span></div><div class="term"><b>JSON</b>　<span>データをやりとりするときの書き方の形式</span></div><div class="group">鍵と権限</div><div class="term"><b>トークン／APIキー</b>　<span>外部サービスを使うための合言葉</span></div><div class="term"><b>スクリプトプロパティ</b>　<span>合言葉をコードの外に保管する場所</span></div><div class="term"><b>OAuth・スコープ</b>　<span>「何を許可するか」の仕組みと範囲</span></div><div class="group newcol">動かし方・運用</div><div class="term"><b>トリガー（時間主導型・イベント型）</b>　<span>時刻で動くか、出来事で動くか</span></div><div class="term"><b>実行ログ</b>　<span>プログラムが何をしたかの記録</span></div><div class="term"><b>開発環境／本番環境</b>　<span>試すための場所と、実際の業務で使っている場所</span></div><div class="term"><b>コンテナバインド／スタンドアロン</b>　<span>ファイルに紐づくか、単独か</span></div><div class="group">作れるものを広げる</div><div class="term"><b>Webアプリ（デプロイ）</b>　<span>GASの仕組みをURLで公開する</span></div><div class="term"><b>ライブラリ</b>　<span>他の人が作ったGASの部品を再利用する</span></div><div class="term"><b>HTML</b>　<span>Webページの見た目や構造を書く言語（マークアップ言語）</span></div></div>
+<div class="terms"><div class="group">AIの基本</div><div class="term"><b>LLM（大規模言語モデル）</b>　<span>大量の文章から学び、文章を作るAI。ChatGPTなどの中身</span></div><div class="group">書き方の形式</div><div class="term"><b>マークダウン記法</b>　<span>見出しや箇条書きを記号で表す書き方</span></div><div class="term"><b>WYSIWYG</b>　<span>見たままの画面で編集する方式（Googleドキュメントなど）</span></div><div class="group">外部サービスとつなぐ</div><div class="term"><b>API</b>　<span>サービスが外部のプログラム向けに用意した窓口</span></div><div class="term"><b>Webhook</b>　<span>何か起きたら、指定URLへ自動で通知する仕組み</span></div><div class="term"><b>HTTPリクエスト</b>　<span>インターネット越しに依頼を送る通信の仕方</span></div><div class="term"><b>JSON</b>　<span>データをやりとりするときの書き方の形式</span></div><div class="group newcol">鍵と権限</div><div class="term"><b>トークン／APIキー</b>　<span>外部サービスを使うための合言葉</span></div><div class="term"><b>スクリプトプロパティ</b>　<span>合言葉をコードの外に保管する場所</span></div><div class="term"><b>OAuth・スコープ</b>　<span>「何を許可するか」の仕組みと範囲</span></div><div class="group">動かし方・運用</div><div class="term"><b>トリガー（時間主導型・イベント型）</b>　<span>時刻で動くか、出来事で動くか</span></div><div class="term"><b>実行ログ</b>　<span>プログラムが何をしたかの記録</span></div><div class="term"><b>開発環境／本番環境</b>　<span>試すための場所と、実際の業務で使っている場所</span></div><div class="term"><b>コンテナバインド／スタンドアロン</b>　<span>ファイルに紐づくか、単独か</span></div><div class="group">作れるものを広げる</div><div class="term"><b>Webアプリ（デプロイ）</b>　<span>GASの仕組みをURLで公開する</span></div><div class="term"><b>ライブラリ</b>　<span>他の人が作ったGASの部品を再利用する</span></div><div class="term"><b>HTML</b>　<span>Webページの見た目や構造を書く言語（マークアップ言語）</span></div></div>
 </div></section>
 
 <div id="bar"></div>

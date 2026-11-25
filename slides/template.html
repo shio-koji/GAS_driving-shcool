@@ -56,6 +56,8 @@
   ul.sub { margin: 6px 0 0; padding: 0; list-style: none; font-size: 23px; line-height: 1.5; color: #3a3a3c; display: flex; flex-direction: column; gap: 4px; }
   ul.sub li { padding-left: 1.1em; position: relative; }
   ul.sub li::before { content: ""; position: absolute; left: 0; top: .6em; width: 7px; height: 7px; border-radius: 50%; border: 2px solid var(--sub); background: none; }
+  ul.points li.then::before, ul.sub li.then::before { content: "→"; width: auto; height: auto; border: none; border-radius: 0; background: none; top: 0; color: var(--accent); font-weight: 700; }
+  ul.points li.then, ul.sub li.then { padding-left: 1.4em; }
   .label { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 2px; font-weight: 700; }
 
   /* 表紙・章扉 */
