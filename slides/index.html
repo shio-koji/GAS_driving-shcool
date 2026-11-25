@@ -146,6 +146,8 @@
   .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
   .col { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
   .cols.wide { grid-template-columns: 3fr 2fr; }
+  .cols.text { grid-template-columns: 2fr 1fr; gap: 32px; }
+  .cols.text ul.points { gap: 10px; }
   .code { white-space: pre-wrap; overflow-wrap: anywhere; }
 
   /* 進行状況 */
@@ -392,28 +394,56 @@
 <div class="flow small"><div class="node accent">中間物<small>Markdownなど</small></div><div class="arrow">→</div><div class="node">完成品<small>スライド・HTML</small></div></div>
 </div></section>
 
+<section class="slide"><h2>tips：AIの言っていることを、AIに聞いて理解する</h2><div class="body">
+<ul class="points"><li>AIの説明が分からなければ、そのままAIに聞き返す<ul class="sub"><li>例：「この言葉はどういう意味？」「小学生にも分かるように言い直して」</li><li>例：「このコードの3行目は何をしている？」</li></ul></li><li>分かるようになるほど、AIの間違いに気づける<ul class="sub"><li>AIは間違えることもある。理解する力が、確かめる力になる</li></ul></li><li>根拠：経験のある開発者も、分からないコードをAIに説明させている<ul class="sub"><li>「仕組みが分からなかったので、GPT-3に聞いた」（"I could not figure out how it works. So I asked GPT-3."）</li><li>「言うことは何でも信じられるわけではない。ペダルのこぎ方は自分で知っておく必要がある」（"You can't trust anything it says" / "You still have to know how to pedal!"）</li><li>出典：Simon Willison「Using GPT-3 to explain how code works」2022年7月</li></ul></li></ul>
+</div></section>
+
 <section class="slide"><h2>tips：ルールベースとLLMベース</h2><div class="body">
 <ul class="points"><li><span class="label">ルールベース</span>：決めた規則どおりに処理する<ul class="sub"><li>入力の形が厳格（決まった列、決まった書式）</li><li>同じ入力なら、いつも同じ結果</li><li>例：GASで書いた普通のプログラム</li></ul></li><li><span class="label">LLMベース</span>：LLM（大規模言語モデル）が文脈から判断して処理する<ul class="sub"><li>曖昧な入力も扱える（自由記述、表記ゆれ）</li><li>結果が毎回少し変わり、間違うこともある</li><li>例：ChatGPT・Gemini・Claudeの中身がLLM</li></ul></li><li class="then">決まった処理はルールベース、曖昧な判断はLLMベースが向く</li></ul>
 </div></section>
 
-<section class="slide"><h2>tips：AIにプログラムを書かせるか、直接やらせるか</h2><div class="body">
-<ul class="points"><li><span class="label">AIにプログラムを書かせて実行する</span><ul class="sub"><li>AIが働くのは書くときだけ。動く処理はルールベース</li><li>何度実行しても同じ結果。大量・定期の処理に向く</li><li>処理するデータをAIに渡さずに済む</li></ul></li><li><span class="label">AIに直接やらせる</span>（チャットにデータを貼って頼む、など）<ul class="sub"><li>毎回AIが判断する。曖昧なものに強い</li><li>結果は毎回変わりうる。1回ずつの作業に向く</li><li>処理するデータをAIに渡すことになる</li></ul></li><li class="then">今日の講座は前者（プログラムを書かせる）</li></ul>
+<section class="slide"><h2>tips：LLMにプログラムを書かせるか、直接やらせるか</h2><div class="body">
+<ul class="points"><li><span class="label">LLMにプログラムを書かせて実行する</span><ul class="sub"><li>LLMが働くのは書くときだけ。動く処理はルールベース</li><li>何度実行しても同じ結果。大量・定期の処理に向く</li><li>処理するデータをLLMに渡さずに済む</li></ul></li><li><span class="label">LLMに直接やらせる</span>（チャットにデータを貼って頼む、など）<ul class="sub"><li>毎回LLMが判断する。曖昧なものに強い</li><li>結果は毎回変わりうる。1回ずつの作業に向く</li><li>処理するデータをLLMに渡すことになる</li></ul></li><li class="then">今日の講座は前者（プログラムを書かせる）</li></ul>
 </div></section>
 
 <section class="slide"><h2>tips：処理の途中でLLMを使う</h2><div class="body">
 <ul class="points"><li>GASの処理の一部だけをLLMに任せられる<ul class="sub"><li>例：フォームの自由記述を、Gemini APIで分類・要約してシートに書く</li><li>決まった部分はルールベース、曖昧な部分だけLLM</li></ul></li><li>GASからGemini APIに文章を送り、結果を受け取る<ul class="sub"><li>APIキーが必要（スクリプトプロパティに保管する）</li></ul></li><li><span class="warn">個人情報を含む文章を送るときは、特に注意</span><ul class="sub"><li>送った文章はGoogleに渡る。無料枠では製品改善や人のレビューに使われうる</li><li>送る前に「個人情報をAIに渡すときの判定基準」で判断する</li></ul></li></ul>
 </div></section>
 
+<section class="slide"><h2>tips：権限の基本（読む・書く・消す）</h2><div class="body">
+<ul class="points"><li><span class="label">read（読み取り）</span>：中身を見るだけ。何も変わらない<ul class="sub"><li>例：シートの値を読む、メールを検索する</li></ul></li><li><span class="label">write（書き込み・編集）</span>：中身を作る・変える<ul class="sub"><li>例：シートに書き込む、メールの下書きを作る</li></ul></li><li><span class="label">delete（削除）</span>：消す。元に戻せないことがある<ul class="sub"><li>例：行・ファイル・メールを消す</li></ul></li><li><span class="label">その他の操作</span>：外に働きかける<ul class="sub"><li>例：メールを送る（send）、共有設定を変える、プログラムを実行する（execute）</li></ul></li><li class="then">権限は必要な分だけにするほど安全<ul class="sub"><li>例：読むだけの処理なら、ファイルの「閲覧者」で足りる</li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>tips：権限の種類</h2><div class="body">
+<ul class="points"><li><span class="label">ファイルの共有権限</span>：人がファイルに何をできるか<ul class="sub"><li>閲覧者・閲覧者（コメント可）・編集者・オーナー</li><li>プログラムは、実行する人が触れるファイルにしか触れない</li></ul></li><li><span class="label">スクリプトの権限（スコープ）</span>：プログラムに何を許すか<ul class="sub"><li>初回の承認画面で許可する（例：スプレッドシートの編集、Gmailの送信）</li></ul></li><li><span class="label">実行する人</span>：誰の権限で動くか<ul class="sub"><li>手動なら実行した人、トリガーなら設定した人</li><li>Webアプリは「自分」か「アクセスしているユーザー」を選ぶ</li></ul></li><li><span class="label">公開範囲</span>：Webアプリを誰が使えるか<ul class="sub"><li>自分のみ／組織内の全員／Googleアカウントを持つ全員／全員</li></ul></li></ul>
+</div></section>
+
 <section class="slide"><h2>次回以降の候補</h2><div class="body">
 <ul class="points"><li>トリガーの設定</li><li>Slack連携</li><li>宿題を題材にした実践</li></ul>
 </div></section>
 
-<section class="slide"><span class="pill">実装例</span><h2>○○（HTMLで作ったアプリ）</h2><div class="body">
-<div class="cols"><div class="col"><ul class="points"><li><span class="warn">○○（何をするか、1〜2行で）</span><ul class="sub"><li><span class="em">入力</span>：○○</li><li><span class="em">出力</span>：○○</li></ul></li><li>使った仕組み<ul class="sub"><li>HTML ／ Webアプリ</li></ul></li></ul></div><div class="col"><div class="shot placeholder">画像：アプリの画面<small>images/example1.png を置くと表示されます</small></div></div></div>
+<section class="slide"><span class="pill">実装例</span><h2>問い合わせが来たらSlackに通知</h2><div class="body">
+<div class="cols text"><div class="col"><ul class="points"><li>問い合わせが届いたら、担当のSlackに知らせる<ul class="sub"><li><span class="em">入力</span>：Googleフォームの回答（件名・カテゴリ）</li><li><span class="em">出力</span>：Slackの「#問い合わせ」チャンネルへの投稿</li><li><span class="em">きっかけ</span>：フォームの送信</li></ul></li><li>使った仕組み：<span class="em">API</span>（外のプログラム向けの窓口）<ul class="sub"><li>「○○ API」がある → ○○を外（GASなど）から操作できる</li><li>例：Slack APIがある → GASからSlackに投稿できる</li></ul></li><li>工夫<ul class="sub"><li>本文や連絡先は流さず、件名とカテゴリだけ</li></ul></li></ul></div><div class="col"><div class="shot placeholder">画像：Slackに届いた通知<small>images/example-slack.png を置くと表示されます</small></div></div></div>
 </div></section>
 
-<section class="slide"><span class="pill">実装例</span><h2>○○（Slackと連携する仕組み）</h2><div class="body">
-<div class="cols"><div class="col"><ul class="points"><li><span class="warn">○○（何をするか、1〜2行で）</span><ul class="sub"><li><span class="em">入力</span>：○○</li><li><span class="em">出力</span>：Slackの ○○ チャンネルへの通知</li></ul></li><li>使った仕組み<ul class="sub"><li>Slack連携（Webhook） ／ トリガー</li></ul></li></ul></div><div class="col"><div class="shot placeholder">画像：Slackに届いた通知<small>images/example2.png を置くと表示されます</small></div></div></div>
+<section class="slide"><span class="pill">実装例</span><h2>メンバー専用の入力画面</h2><div class="body">
+<div class="cols text"><div class="col"><ul class="points"><li>案件ページの更新依頼を受け付ける、メンバー専用の画面<ul class="sub"><li><span class="em">入力</span>：画面で入力した内容（案件名、更新したい箇所）</li><li><span class="em">出力</span>：スプレッドシートへの記録</li><li><span class="em">きっかけ</span>：画面の「送信」ボタン</li></ul></li><li>使った仕組み<ul class="sub"><li>HTML／Webアプリ</li></ul></li><li>工夫<ul class="sub"><li>公開範囲を「組織内の全員」にし、外の人には見せない</li></ul></li></ul></div><div class="col"><div class="shot placeholder">画像：入力画面<small>images/example-form.png を置くと表示されます</small></div></div></div>
+</div></section>
+
+<section class="slide"><span class="pill">実装例</span><h2>案件の状況を一覧するダッシュボード</h2><div class="body">
+<div class="cols text"><div class="col"><ul class="points"><li>案件ごとの状況・次の期日・担当を、1つの画面で見渡す<ul class="sub"><li><span class="em">入力</span>：案件一覧のシート（状況、次の期日、担当）</li><li><span class="em">出力</span>：一覧画面（期日が近い順、状況ごとに色分け）</li><li><span class="em">きっかけ</span>：画面を開いたとき</li></ul></li><li>使った仕組み<ul class="sub"><li>HTML／Webアプリ／シートの読み取り（read）だけ</li></ul></li><li>工夫<ul class="sub"><li>読むだけなので、データを壊す心配がない</li></ul></li></ul></div><div class="col"><div class="shot placeholder">画像：ダッシュボードの画面<small>images/example-dashboard.png を置くと表示されます</small></div></div></div>
+</div></section>
+
+<section class="slide"><span class="pill">実装例</span><h2>受け取った資料の整理</h2><div class="body">
+<div class="cols text"><div class="col"><ul class="points"><li>受信フォルダに入れた資料を、案件ごとのフォルダへ振り分ける<ul class="sub"><li><span class="em">入力</span>：Driveの「受信」フォルダのファイル</li><li><span class="em">出力</span>：案件フォルダへの移動と、ファイル名の統一（日付_案件名_資料名）</li><li><span class="em">きっかけ</span>：毎日決まった時刻</li></ul></li><li>使った仕組み<ul class="sub"><li>Driveの操作／時間主導型のトリガー</li></ul></li><li>工夫<ul class="sub"><li>案件番号の付け方を先に決める。最初はコピーで試す</li></ul></li></ul></div><div class="col"><div class="shot placeholder">画像：整理されたフォルダ<small>images/example-drive.png を置くと表示されます</small></div></div></div>
+</div></section>
+
+<section class="slide"><span class="pill">実装例</span><h2>お礼メールの下書きを一括で作る</h2><div class="body">
+<div class="cols text"><div class="col"><ul class="points"><li>支援者一覧から、宛名入りのお礼メールの下書きを作る<ul class="sub"><li><span class="em">入力</span>：支援者一覧のシート（名前、メールアドレス、支援内容）</li><li><span class="em">出力</span>：Gmailの下書き</li><li><span class="em">きっかけ</span>：手動で実行</li></ul></li><li>使った仕組み<ul class="sub"><li>Gmail（今日の実演と同じ形）</li></ul></li><li>工夫<ul class="sub"><li>送信は自動にせず、下書きで止めて人が確かめる</li></ul></li></ul></div><div class="col"><div class="shot placeholder">画像：Gmailに並んだ下書き<small>images/example-gmail.png を置くと表示されます</small></div></div></div>
+</div></section>
+
+<section class="slide"><span class="pill">実装例</span><h2>アンケートの自由記述を分類</h2><div class="body">
+<div class="cols text"><div class="col"><ul class="points"><li>アンケートの自由記述を、LLMで「要望／感想／質問」に分ける<ul class="sub"><li><span class="em">入力</span>：アンケート結果のシートの、自由記述の列</li><li><span class="em">出力</span>：同じシートの「分類」の列</li><li><span class="em">きっかけ</span>：手動で実行</li></ul></li><li>使った仕組み<ul class="sub"><li>Gemini API（処理の途中でLLMを使う）</li></ul></li><li>工夫<ul class="sub"><li><span class="warn">個人情報が含まれるなら、先に判定基準のチェックをする</span></li></ul></li></ul></div><div class="col"><div class="shot placeholder">画像：分類の列が埋まったシート<small>images/example-llm.png を置くと表示されます</small></div></div></div>
 </div></section>
 
 <section class="slide"><h2>発展：知っておくとよい言葉</h2><div class="body">
