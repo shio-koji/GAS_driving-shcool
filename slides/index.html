@@ -1,0 +1,444 @@
+<!doctype html>
+<!-- このファイルは build.mjs が slides.md から自動生成します。直接編集しないでください。 -->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>初心者向けGAS講座</title>
+<style>
+  :root {
+    --ink: #1d1d1f;
+    --sub: #6e6e73;
+    --line: #d2d2d7;
+    --soft: #f4f4f6;
+    --accent: #2557d6;
+    --accent-soft: #eaf0fd;
+    --warn: #c2410c;
+    --warn-soft: #fdf0e8;
+    --font: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+    --mono: Menlo, Consolas, "Courier New", monospace;
+  }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #e8e8eb; font-family: var(--font); color: var(--ink); }
+  * { box-sizing: border-box; }
+
+  /* 1280×720 のキャンバスを画面に合わせて拡大縮小する */
+  #deck { position: absolute; left: 50%; top: 50%; width: 1280px; height: 720px; transform-origin: center; background: #fff; box-shadow: 0 2px 24px rgba(0,0,0,.08); }
+  .slide { position: absolute; inset: 0; padding: 88px 96px 72px; display: none; flex-direction: column; }
+  .slide.active { display: flex; }
+
+  .chapter { position: absolute; top: 36px; left: 96px; font-size: 18px; color: var(--sub); letter-spacing: .02em; }
+  h1 { font-size: 64px; line-height: 1.3; margin: 0; font-weight: 700; }
+  h2 { font-size: 44px; line-height: 1.35; margin: 0 0 32px; font-weight: 700; }
+  h3 { font-size: 28px; margin: 0 0 10px; font-weight: 700; }
+  p { margin: 0; }
+  .body { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; gap: 28px; }
+  .lead { font-size: 28px; line-height: 1.6; color: var(--sub); }
+  .note { font-size: 22px; line-height: 1.6; color: var(--sub); }
+  .em { color: var(--accent); font-weight: 700; }
+  span.warn { color: var(--warn); font-weight: 700; }
+  .center { text-align: center; }
+  .statement { font-size: 52px; font-weight: 700; line-height: 1.4; color: var(--ink); }
+  .big { font-size: 40px; font-weight: 700; color: var(--ink); }
+  .strong { font-size: 30px; font-weight: 700; color: var(--ink); }
+  p.box { background: var(--soft); border-radius: 16px; padding: 26px 30px; }
+  code { font-family: var(--mono); }
+  .pill + h2 { margin-top: 20px; }
+  .slide.tight .body { gap: 22px; }
+
+  ul.points { margin: 0; padding: 0; list-style: none; font-size: 28px; line-height: 1.5; display: flex; flex-direction: column; gap: 16px; }
+  ul.points li { padding-left: 1.1em; position: relative; }
+  ul.points li::before { content: ""; position: absolute; left: 0; top: .62em; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+  ol.nums { margin: 0; padding: 0; list-style: none; counter-reset: n; font-size: 28px; line-height: 1.5; display: flex; flex-direction: column; gap: 16px; }
+  ol.nums li { counter-increment: n; display: flex; gap: 20px; align-items: baseline; }
+  ol.nums li::before { content: counter(n); flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 22px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; transform: translateY(-4px); }
+
+  /* 第2階層の箇条書き */
+  ul.sub { margin: 6px 0 0; padding: 0; list-style: none; font-size: 23px; line-height: 1.5; color: #3a3a3c; display: flex; flex-direction: column; gap: 4px; }
+  ul.sub li { padding-left: 1.1em; position: relative; }
+  ul.sub li::before { content: ""; position: absolute; left: 0; top: .6em; width: 7px; height: 7px; border-radius: 50%; border: 2px solid var(--sub); background: none; }
+  .label { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 2px; font-weight: 700; }
+
+  /* 表紙・章扉 */
+  .slide.title { justify-content: center; }
+  .slide.title .sub { font-size: 32px; color: var(--accent); margin-top: 20px; font-weight: 700; }
+  .slide.section { justify-content: center; }
+  .slide.section .no { font-size: 120px; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 20px; }
+  .slide.section h1 { font-size: 56px; }
+
+  /* カード */
+  .grid { display: grid; gap: 24px; }
+  .g1 { grid-template-columns: 1fr; }
+  .g2 { grid-template-columns: 1fr 1fr; }
+  .g3 { grid-template-columns: 1fr 1fr 1fr; }
+  .g4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .card { background: var(--soft); border-radius: 16px; padding: 26px 30px; }
+  .card p { font-size: 22px; line-height: 1.6; color: var(--sub); }
+  .steps .card { padding: 22px 20px; }
+  .steps .card h3 { font-size: 20px; }
+  .compact .card { padding: 18px 22px; }
+  .compact .card h3 { font-size: 22px; margin-bottom: 6px; }
+  .compact .card p { font-size: 18px; line-height: 1.5; }
+  .compact .card p.quote { font-size: 18px; }
+  .compact .card p.src { font-size: 15px; }
+  .card.accent { background: var(--accent-soft); }
+  .card.accent h3 { color: var(--accent); }
+  .card.warn { background: var(--warn-soft); }
+  .card.warn h3 { color: var(--warn); }
+  .card.small h3 { font-size: 24px; white-space: nowrap; }
+  .card .label { font-size: 18px; color: var(--sub); margin-bottom: 6px; }
+
+  /* 流れ図 */
+  .flow { display: flex; align-items: center; justify-content: center; gap: 16px; }
+  .node { border: 2px solid var(--ink); border-radius: 14px; padding: 18px 26px; font-size: 28px; font-weight: 700; text-align: center; background: #fff; }
+  .node small { display: block; font-size: 18px; font-weight: 400; color: var(--sub); margin-top: 4px; }
+  .node.accent { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+  .node.ghost { border-style: dashed; border-color: var(--line); color: var(--sub); }
+  .node.dim { border-color: var(--line); color: var(--sub); font-weight: 400; }
+  .flow:not(.small) .node { white-space: nowrap; }
+  .node.wide { min-width: 280px; }
+  .node.warn { border-color: var(--warn); color: var(--warn); }
+  .flow.plain .node { border: none; background: none; padding: 0; font-size: 24px; font-weight: 400; color: var(--sub); }
+  .arrow { font-size: 30px; color: var(--sub); flex: none; }
+  .flow.small .node { font-size: 20px; padding: 14px 14px; flex: 1; }
+  .flow.small .arrow { font-size: 22px; }
+
+  .pill { display: inline-block; font-size: 20px; font-weight: 700; padding: 6px 16px; border-radius: 999px; background: var(--accent); color: #fff; align-self: flex-start; }
+  .chips { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .chip { font-size: 26px; padding: 10px 22px; border-radius: 999px; background: var(--soft); }
+  .code { font-family: var(--mono); font-size: 22px; background: var(--ink); color: #fff; padding: 16px 22px; border-radius: 10px; }
+
+  .prompt { background: var(--soft); border-left: 6px solid var(--accent); border-radius: 0 14px 14px 0; padding: 26px 36px; font-size: 24px; line-height: 1.7; }
+  .prompt.big { font-size: 30px; }
+  .prompt b { color: var(--accent); }
+  .prompt .sample { margin: 4px 0 4px 1em; padding: 8px 16px; background: #fff; border-radius: 8px; font-size: 21px; color: var(--sub); }
+
+  .rows { display: flex; flex-direction: column; gap: 10px; }
+  .row { display: flex; align-items: center; gap: 20px; font-size: 25px; }
+  .row .k { flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--soft); font-size: 20px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; }
+
+  .row.up .k { background: var(--accent); color: #fff; }
+  table.mini { border-collapse: collapse; font-size: 20px; width: 100%; background: #fff; }
+  table.mini th, table.mini td { border: 1px solid var(--line); padding: 6px 12px; text-align: left; }
+  table.mini th { background: var(--soft); font-weight: 700; }
+  .draft { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 8px 14px; font-size: 19px; line-height: 1.5; }
+  .draft.bad { border-color: var(--warn); background: var(--warn-soft); }
+
+  .terms { column-count: 2; column-gap: 48px; font-size: 18px; line-height: 1.4; }
+  .terms .group { font-size: 16px; color: var(--accent); font-weight: 700; margin-top: 10px; break-after: avoid; }
+  .terms .newcol { break-before: column; margin-top: 0; }
+  .terms .term { break-inside: avoid; margin-top: 4px; }
+  .terms b { font-size: 20px; }
+  .terms span { color: var(--sub); }
+
+  /* 画像 */
+  .shot { display: block; width: 100%; max-height: 380px; object-fit: contain; border-radius: 12px; }
+  .shot.short { max-height: 230px; }
+  .shot.mini { max-height: 150px; object-position: left center; }
+  .shot.placeholder { text-align: center; padding: 0 16px; height: 300px; border: 2px dashed var(--line); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 22px; color: var(--sub); }
+  .shot.placeholder.short { height: 230px; }
+  .shot.placeholder.mini { height: 150px; }
+  .card p.quote { color: var(--ink); font-size: 20px; }
+  .card p.src { font-size: 16px; }
+  .card p + p { margin-top: 8px; }
+  .shot.placeholder small { font-size: 16px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .col { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+  .cols.wide { grid-template-columns: 3fr 2fr; }
+  .code { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+  /* 進行状況 */
+  #bar { position: absolute; left: 0; bottom: 0; height: 6px; background: var(--accent); transition: width .2s; }
+  #num { position: absolute; right: 32px; bottom: 22px; font-size: 16px; color: var(--sub); font-variant-numeric: tabular-nums; }
+
+  @media print {
+    @page { size: 1280px 720px; margin: 0; }
+    html, body { overflow: visible; background: #fff; }
+    #deck { position: static; transform: none !important; box-shadow: none; height: auto; }
+    .slide { display: flex !important; position: relative; height: 720px; page-break-after: always; }
+    #bar, #num { display: none; }
+  }
+</style>
+</head>
+<body>
+<div id="deck">
+<section class="slide title"><h1>初心者向けGAS講座</h1><p class="sub">AIにプログラミングさせる</p></section>
+
+<section class="slide" data-chapter="導入"><h2>今日のゴール</h2><div class="body">
+<ol class="nums"><li><div>GASがどこで・誰として・何をきっかけに動くかわかる</div></li><li><div>「入力」と「出力」でAIにプログラムを頼める</div></li><li><div>AIが作ったプログラムを安全に試し、結果を確かめられる</div></li></ol>
+<p class="note box"><span class="em">今日やらないこと：</span>プログラミング文法の学習</p>
+</div></section>
+
+<section class="slide" data-chapter="導入"><h2>今日の流れ</h2><div class="body">
+<ol class="nums"><li><div>コンピュータとプログラム</div></li><li><div>GASとは何か</div></li><li><div>最初のプロンプトの型</div></li><li><div>実演：AIと一緒に動かしてみる</div></li><li><div>GASを使う段取りと、AIの使いどころ</div></li><li><div>まとめと次の一歩</div></li></ol>
+</div></section>
+
+<section class="slide section"><div class="no">1</div><h1>コンピュータとプログラム</h1></section>
+
+<section class="slide"><h2>PCはすべてプログラムで動いている</h2><div class="body">
+<div class="cols"><div class="col"><ul class="points"><li>どの操作も、裏でプログラムが動いている<ul class="sub"><li>アプリを開く・保存する・メールを送る</li></ul></li><li>ボタンは、プログラムを呼び出す入口<ul class="sub"><li>ボタンで並べ替えても、プログラムで並べ替えても結果は同じ</li></ul></li></ul></div><div class="col"><div class="grid g1 compact"><div class="card"><div class="label">ボタンで並べ替え（GUI）</div><h3>データ › シートを並べ替え › A→Z</h3><div class="shot placeholder mini">画像：スプレッドシートの「データ」メニュー<small>images/01-sort-menu.png を置くと表示されます</small></div></div><div class="card"><div class="label">プログラムで並べ替え（GAS）※読まなくてOK</div><div class="code">SpreadsheetApp.getActiveSheet().sort(1);</div></div></div></div></div>
+</div></section>
+
+<section class="slide"><h2>GUIのおかげで意識せずに済む</h2><div class="body">
+<div class="cols"><div class="col"><ul class="points"><li>GUI＝画面を見て操作するための仕組み<ul class="sub"><li>ボタンやメニューなど</li></ul></li><li>GUIがプログラムを使いやすい形に<span class="em">包んでいる</span><ul class="sub"><li>例：ボタンを押すと、裏でプログラムが動く</li></ul></li></ul>
+<div class="flow">
+  <div class="node dim">あなた</div>
+  <div class="arrow">→</div>
+  <div class="node accent" style="padding:24px 36px">
+    GUI<small>ボタン・メニュー</small>
+    <div class="node" style="margin-top:12px; background:var(--ink); color:#fff; border-color:var(--ink)">プログラム</div>
+  </div>
+</div></div><div class="col"><div class="shot placeholder">画像：普段使っているGUIの画面（例：スプレッドシート）<small>images/02-gui.png を置くと表示されます</small></div></div></div>
+</div></section>
+
+<section class="slide"><h2>GUIはレトルト、プログラミングは手作り</h2><div class="body">
+<ul class="points"><li><span class="label">レトルトカレー＝GUI</span><ul class="sub"><li>用意された商品から選んで温めるだけで手軽</li><li>用意されたもの以外は作れない</li></ul></li><li><span class="label">手作りカレー＝プログラミング</span><ul class="sub"><li>材料と手順を自分で組み合わせ、こだわれる</li><li>作り方を指示する必要がある</li></ul></li><li>レトルトも誰かの手作り<ul class="sub"><li>普段使うアプリも、誰かがプログラミングして作ったもの</li></ul></li></ul>
+</div></section>
+
+<section class="slide section"><div class="no">2</div><h1>GASとは何か</h1></section>
+
+<section class="slide"><h2>プログラミングに必要なもの</h2><div class="body">
+<ul class="points"><li><span class="em">言語</span>：指示を書く言葉<ul class="sub"><li>JavaScript、Pythonなど多数</li></ul></li><li><span class="em">エディタ</span>：コードを書くための専用のメモ帳</li><li><span class="em">実行環境</span>：プログラムを動かす場所<ul class="sub"><li>自分のPC、または遠くのサーバー（中身はコンピュータ）</li></ul></li><li><span class="em">操作できる対象</span>：ファイル、Webサービス、機器など</li><li>普通はこれらを自分でそろえる<ul class="sub"><li>インストールや設定が必要</li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>GASの場合</h2><div class="body">
+<ul class="points"><li>必要なものが全部ブラウザの中にそろっている<ul class="sub"><li><span class="em">言語</span>：JavaScript</li><li><span class="em">エディタ</span>：Apps Scriptエディタ（ブラウザで開く）</li><li><span class="em">実行環境</span>：Googleのサーバー</li></ul></li><li>操作できるのはGoogleのサービス<ul class="sub"><li>スプレッドシート、Gmail、Drive、カレンダー、フォームなど</li></ul></li><li>だから準備は不要</li></ul>
+</div></section>
+
+<section class="slide"><h2>GASの見取り図</h2><div class="body">
+<ul class="points"><li>きっかけを受けてプログラムが動き、Googleの各サービスを読み書きする</li><li>すべて「誰かの権限」の範囲で動く</li></ul>
+<div style="border:2px dashed var(--line); border-radius:20px; padding:40px 36px 32px; position:relative">
+  <div class="note" style="position:absolute; top:-18px; left:28px; background:#fff; padding:0 12px">誰かの権限の範囲</div>
+  <div class="flow">
+    <div class="node">きっかけ</div>
+    <div class="arrow">→</div>
+    <div class="node accent">プログラム</div>
+    <div class="arrow">⇄<small style="display:block; font-size:16px">読む・書く</small></div>
+    <div style="display:flex; flex-direction:column; gap:10px">
+      <div class="chips"><span class="chip">スプレッドシート</span><span class="chip">Gmail</span><span class="chip">Drive</span></div>
+      <div class="chips"><span class="chip">カレンダー</span><span class="chip">フォーム</span></div>
+    </div>
+  </div>
+</div>
+</div></section>
+
+<section class="slide"><h2>きっかけ：誰が、いつ動かすか</h2><div class="body">
+<ul class="points"><li>きっかけは主に3種類<ul class="sub"><li>手動で実行（今日はこれだけ）</li><li>決まった時刻（毎朝9時など）</li><li>フォームの送信（回答が来たときなど）</li></ul></li><li>GASではこれを<span class="em">「トリガー」</span>と呼ぶ</li></ul>
+</div></section>
+
+<section class="slide"><h2>誰として動くか</h2><div class="body">
+<ul class="points"><li>実行した人（または設定した人）の<span class="em">権限</span>で動く<ul class="sub"><li>その人が触れるものには、プログラムも触れる</li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>できること・制約</h2><div class="body">
+<ul class="points"><li><span class="label">できること</span><ul class="sub"><li>転記、メールの作成、ファイルの整理、定期実行</li><li>Slack連携（今回は紹介のみ）</li></ul></li><li><span class="label">制約</span><ul class="sub"><li>1回あたりの実行時間に上限がある</li><li>1日あたりのメール送信数に上限がある</li></ul></li></ul>
+</div></section>
+
+<section class="slide section"><div class="no">3</div><h1>最初のプロンプトの型</h1></section>
+
+<section class="slide"><h2>まず一度動かしてみる</h2><div class="body">
+<ul class="points"><li>言葉からプログラムを作り、実際に動かす</li><li>完璧な依頼文はいらない<ul class="sub"><li>最低限の型で始める</li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>伝えるのは「入力」と「出力」</h2><div class="body">
+<ul class="points"><li><span class="em">入力</span>：どこから、何を読むか</li><li><span class="em">出力</span>：どこへ、どんな形で出すか</li><li>その間の「変換」はAIが考える<ul class="sub"><li>カレーなら、材料と完成形を伝えれば作り方はAIが考える</li></ul></li></ul>
+<div class="flow"><div class="node accent wide">入力<small>どこから、何を読むか</small></div><div class="arrow">→</div><div class="node ghost wide">変換<small>AIが考える</small></div><div class="arrow">→</div><div class="node accent wide">出力<small>どこへ、どんな形で出すか</small></div></div>
+</div></section>
+
+<section class="slide"><h2>入力と出力は「場所」まで具体的に</h2><div class="body">
+<ul class="points"><li>ファイル › シート › 列 まで書く<ul class="sub"><li>例：「支援者リスト」の「4月」シートのB列（名前）</li></ul></li><li>出力は<span class="em">完成見本を1つ</span>見せると伝わる</li></ul>
+</div></section>
+
+<section class="slide"><h2>ただし「決まりごと」は書く</h2><div class="body">
+<ul class="points"><li>AIが知りようのない業務のルールは書く<ul class="sub"><li>例：対応済みは除く、「様」をつける、空欄は飛ばす</li></ul></li><li>書かないと、<span class="warn">AIが推測で埋める</span></li></ul>
+</div></section>
+
+<section class="slide"><h2>決まりごとを書かないと</h2><div class="body">
+<div class="cols"><div class="col"><ul class="points"><li>決まりごとの有無で、AIの結果が変わる<ul class="sub"><li>なし：C列（用件）が空欄でも、空っぽの下書きができる</li><li>あり：空欄の行は飛ばされる</li></ul></li></ul>
+<table class="mini"><tr><th>A 宛先</th><th>B 名前</th><th>C 用件</th></tr><tr><td>tanaka@…</td><td>田中</td><td>資料送付のお願い</td></tr><tr><td>sato@…</td><td>佐藤</td><td>（空欄）</td></tr><tr><td>suzuki@…</td><td>鈴木</td><td>面談日程の確認</td></tr></table></div><div class="col"><div class="grid g1 compact"><div class="card warn"><h3>決まりごと なし</h3><div class="rows"><div class="draft">田中様 ／ 用件：資料送付のお願い</div><div class="draft bad">佐藤様 ／ 用件：<span class="warn">（空っぽのまま）</span></div><div class="draft">鈴木様 ／ 用件：面談日程の確認</div></div></div><div class="card accent"><h3>「C列が空欄なら飛ばす」あり</h3><div class="rows"><div class="draft">田中様 ／ 用件：資料送付のお願い</div><div class="draft">鈴木様 ／ 用件：面談日程の確認</div></div></div></div></div></div>
+</div></section>
+
+<section class="slide"><h2>実演で使う依頼文</h2><div class="body">
+<ul class="points"><li>型に当てはめると、こうなる</li></ul>
+<div class="prompt"><p>Google Apps Scriptで書いてください。</p><p><span class="em">入力：</span>スプレッドシート「○○」の A列（宛先）・B列（名前）・C列（用件）</p><p><span class="em">出力：</span>Gmailの下書き（送信はしない）。文面の見本：</p><p class="sample">田中様<br>ご用件：資料送付のお願い　について、ご連絡いたします。</p><p><span class="em">決まりごと：</span>C列が空欄の行は飛ばす</p></div>
+</div></section>
+
+<section class="slide section"><div class="no">4</div><h1>実演：AIと一緒に動かしてみる</h1></section>
+
+<section class="slide"><h2>実演の流れ</h2><div class="body">
+<ol class="nums"><li><div>依頼文をAIに渡し、コードを受け取る</div></li><li><div>Apps Scriptに貼り付ける</div></li><li><div>実行する</div></li><li><div>承認画面で許可する</div></li><li><div>結果を確認する</div></li></ol>
+</div></section>
+
+<section class="slide"><span class="pill">実演</span><h2>依頼文をAIに渡し、コードを受け取る</h2><div class="body">
+<ul class="points"><li>AIに依頼して、コードを受け取る<ul class="sub"><li>3章の依頼文をそのまま渡す</li><li>返ってきたコードを丸ごとコピーする</li></ul></li></ul>
+<div class="shot placeholder short">画像：AIに依頼文を渡して、コードが返ってきた画面<small>images/03-ai-chat.png を置くと表示されます</small></div>
+</div></section>
+
+<section class="slide"><h2>Apps Scriptエディタの見方</h2><div class="body">
+<div class="cols"><div class="col"><ol class="nums"><li><div><span class="em">ファイル一覧</span>：プロジェクトのファイルが並ぶ</div></li><li><div><span class="em">コードを書く場所</span>：AIが作ったコードを貼る</div></li><li><div><span class="em">保存</span>：貼ったら、まず保存</div></li><li><div><span class="em">関数の選択と「実行」ボタン</span></div></li><li><div><span class="em">実行ログ</span>：結果やエラーが出る<ul class="sub"><li>いわゆるコンソール</li></ul></div></li></ol>
+<p class="note">※ 画面はGoogleの更新で変わることがある</p></div><div class="col"><div class="shot placeholder">画像：Apps Scriptエディタの全体（①〜⑤の番号つき）<small>images/08-editor-tour.png を置くと表示されます</small></div></div></div>
+</div></section>
+
+<section class="slide"><span class="pill">実演</span><h2>Apps Scriptに貼り付けて実行する</h2><div class="body">
+<ul class="points"><li>エディタに貼って実行する<ul class="sub"><li>コードを②に貼り、③で保存する</li><li>④で関数を選んで実行する</li></ul></li></ul>
+<div class="shot placeholder short">画像：Apps Scriptエディタにコードを貼り付けた画面<small>images/04-apps-script-editor.png を置くと表示されます</small></div>
+</div></section>
+
+<section class="slide"><h2>承認画面の読み方</h2><div class="body">
+<div class="cols"><div class="col"><ul class="points"><li>初回の実行時に、許可を求める画面が出る</li><li>2つを確かめてから許可する<ul class="sub"><li>何へのアクセスを求めているか</li><li>依頼した内容に見合っているか</li></ul></li></ul></div><div class="col"><div class="shot placeholder">画像：初回実行時に出る承認画面<small>images/05-consent.png を置くと表示されます</small></div></div></div>
+</div></section>
+
+<section class="slide"><span class="pill">実演</span><h2>結果を確認する</h2><div class="body">
+<ul class="points"><li>決まりごとどおりにできたか確かめる<ul class="sub"><li>Gmailの「下書き」を開く</li><li>C列が空欄の行は飛ばされているか</li></ul></li></ul>
+<div class="shot placeholder short">画像：Gmailの「下書き」に並んだメール<small>images/06-gmail-drafts.png を置くと表示されます</small></div>
+</div></section>
+
+<section class="slide"><h2>AIに中身を説明してもらう</h2><div class="body">
+<ul class="points"><li>AIに説明させると、全体をつかめる<ul class="sub"><li>例：「入力・変換・出力に分けて説明して」と頼む</li></ul></li><li>ただし正しさは<span class="em">結果で</span>確かめる<ul class="sub"><li>説明は全体をつかむためのもの</li></ul></li></ul>
+</div></section>
+
+<section class="slide section"><div class="no">5</div><h1>GASを使う段取りと、<br>AIの使いどころ</h1></section>
+
+<section class="slide"><h2>GASを使う段取り</h2><div class="body">
+<ul class="points"><li><span class="label">上流</span>：何を作るか決める<ul class="sub"><li>①業務を選ぶ　②入力と出力を決める　③依頼文を書く</li></ul></li><li><span class="label">下流</span>：作って、動かして、直す<ul class="sub"><li>④コードを作ってもらう　⑤貼り付けて実行　⑥結果を確かめる　⑦直す　⑧定期実行で運用</li></ul></li></ul>
+<div class="grid g4 steps"><div class="card accent"><div class="label">① 上流</div><h3>業務を選ぶ</h3></div><div class="card accent"><div class="label">② 上流</div><h3>入力と出力を決める</h3></div><div class="card accent"><div class="label">③ 上流</div><h3>依頼文を書く</h3></div><div class="card"><div class="label">④ 下流</div><h3>コードを作ってもらう</h3></div><div class="card"><div class="label">⑤ 下流</div><h3>貼り付けて実行</h3></div><div class="card"><div class="label">⑥ 下流</div><h3>結果を確かめる</h3></div><div class="card"><div class="label">⑦ 下流</div><h3>直す</h3></div><div class="card"><div class="label">⑧ 下流</div><h3>定期実行で運用</h3></div></div>
+</div></section>
+
+<section class="slide"><h2>どの工程でもAIに聞ける</h2><div class="body">
+<div class="cols"><div class="col"><ul class="points"><li><span class="em">迷ったらAIに聞く。これに尽きる。AIの奴隷になろう！！！！</span><ul class="sub"><li>下流も上流も、右のように聞けばいい</li></ul></li><li><span class="label">上流</span>の判断は人の役割。でも判断材料はAIに出してもらえる<ul class="sub"><li>例：「この業務、自動化できそう？」</li></ul></li></ul></div><div class="col"><div class="rows"><div class="row up"><span class="k">①</span><span>「この業務、自動化できそう？」</span></div><div class="row up"><span class="k">②</span><span>「入力と出力を整理するのを手伝って」</span></div><div class="row up"><span class="k">③</span><span>「この依頼文で足りないことはある？」</span></div><div class="row"><span class="k">⑤</span><span>「どこに貼ればいい？どう実行する？」</span></div><div class="row"><span class="k">⑥</span><span>「テスト用のダミーデータを作って」</span></div><div class="row"><span class="k">⑦</span><span>「このエラーはどういう意味？」</span></div><div class="row"><span class="k">⑧</span><span>「毎朝9時に動かすにはどうする？」</span></div></div></div></div>
+</div></section>
+
+<section class="slide"><h2>ただし決める・確かめるは人</h2><div class="body">
+<ul class="points"><li>AIに任せきれないことが4つある<ul class="sub"><li>何を作るかを<span class="em">決める</span></li><li>権限を<span class="em">承認する</span></li><li>結果が正しいかを<span class="em">確かめる</span></li><li>AIに渡してよい情報かを<span class="em">判断する</span></li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>結果で確かめる</h2><div class="body">
+<ul class="points"><li>コードを読めなくても、結果で正しさを確かめられる<ul class="sub"><li>期待する結果を先に決めておく</li><li>少量のダミーデータで試す</li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>エラーは日常</h2><div class="body">
+<ul class="points"><li>エラーはAIに直してもらえばいい<ul class="sub"><li>エラーメッセージをそのままAIに貼る</li></ul></li></ul>
+<div class="flow"><div class="node warn">エラーメッセージ</div><div class="arrow">→ そのまま貼る →</div><div class="node accent">AI</div><div class="arrow">→</div><div class="node">直ったコード</div></div>
+<div class="shot placeholder short">画像：実行ログに出たエラーメッセージ<small>images/07-error.png を置くと表示されます</small></div>
+</div></section>
+
+<section class="slide"><h2>出力には2種類ある</h2><div class="body">
+<ul class="points"><li><span class="label">表示するだけ</span><ul class="sub"><li>画面やログに出す</li></ul></li><li><span class="label">外の世界を変える</span><ul class="sub"><li>メール送信・シートへの書き込み・ファイルの削除など</li><li>取り返しがつかないものもある</li></ul></li><li>変える出力は、まず<span class="em">下書き・コピー・バックアップ</span>で試す</li></ul>
+</div></section>
+
+<section class="slide"><h2>権限と機密情報</h2><div class="body">
+<ul class="points"><li>許可する前、AIに渡す前に確かめる<ul class="sub"><li>承認画面で何へのアクセスを求めているか</li><li>依頼者の個人情報・事件の情報は<span class="warn">AIに貼らない</span></li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>一人ではまだやらないこと（1/3）</h2><div class="body">
+<ul class="points"><li><span class="warn">他人に届く処理を、いきなり本番で</span>（一斉メール送信、Slackへの投稿など）<ul class="sub"><li>理由：届いたものは取り消せない。間違いが大勢に広がる</li><li>やってよい条件：自分宛てや少人数のテストで何度か確かめたら</li></ul></li><li><span class="warn">共有のファイルを直接いじる</span>（チームのシートやフォルダ）<ul class="sub"><li>理由：壊すと自分だけの問題では済まない</li><li>やってよい条件：コピーで確かめ、持ち主の了解を得たら</li></ul></li><li><span class="warn">削除・上書きをする処理</span><ul class="sub"><li>理由：元に戻せないことがある</li><li>やってよい条件：バックアップを取り、戻し方（版の履歴・ゴミ箱）を確かめたら</li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>一人ではまだやらないこと（2/3）</h2><div class="body">
+<ul class="points"><li><span class="warn">個人情報を扱う仕組み</span>（依頼者・支援者の情報）<ul class="sub"><li>理由：漏れたときの影響が大きい。AIに渡せない情報もある</li><li>やってよい条件：団体の情報管理ルールを確認し、責任者の了解を得たら</li></ul></li><li><span class="warn">誰でも見られる形で公開する</span>（Webアプリの公開範囲を「全員」に、など）<ul class="sub"><li>理由：URLを知る人なら誰でもデータに触れられる</li><li>やってよい条件：公開範囲（組織内のみ、など）とアクセス権を理解したら</li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>一人ではまだやらないこと（3/3）</h2><div class="body">
+<ul class="points"><li><span class="warn">黙って自動で動かし続ける</span>（トリガーでの定期実行）<ul class="sub"><li>理由：作った人しか止め方・直し方を知らない状態になる</li><li>やってよい条件：動く内容・時刻・止め方を書き残し、引き継げる人ができたら</li></ul></li><li><span class="warn">複数人で同時に、同じGASを編集する</span><ul class="sub"><li>理由：誰が何を変えたか分からなくなり、他の人の変更を上書きすることがある</li><li>やってよい条件：Git／GitHubで変更の履歴を管理できるようになったら</li></ul></li><li>迷ったら、詳しい人に一度見てもらう</li></ul>
+</div></section>
+
+<section class="slide section"><div class="no">6</div><h1>まとめと次の一歩</h1></section>
+
+<section class="slide"><h2>今日のまとめ</h2><div class="body">
+<ol class="nums"><li><div>PCはプログラムで動いている。GUIはそれを包んでいる</div></li><li><div>GASは、Googleのサービスを自分の権限で動かすプログラム</div></li><li><div>依頼の型は「入力」と「出力」（＋決まりごと）</div></li><li><div>迷ったらAIに聞く。決める・確かめるは人</div></li></ol>
+</div></section>
+
+<section class="slide"><h2>tips：入れ子で伝える</h2><div class="body">
+<ul class="points"><li>細かく調整したいときは、変換を小さく分けて伝える<ul class="sub"><li>例：未処理の行を選ぶ → 文面を作る → 下書きにする</li><li>それぞれが小さな「入力 → 変換 → 出力」</li></ul></li><li>根拠：一度に頼みすぎると、AIは混乱しがち<ul class="sub"><li>"If you ask for too much in one go, it's likely to get confused or produce a "jumbled mess" that's hard to untangle."</li><li>出典：Addy Osmani「My LLM coding workflow going into 2026」2026年1月（執筆当時 Google）</li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>tips：向いている業務</h2><div class="body">
+<ul class="points"><li>向いている業務の特徴<ul class="sub"><li>繰り返しがある</li><li>ルールが決まっている</li><li>Googleのサービス内で完結する</li></ul></li><li>根拠：ルールが決まった定型業務は自動化の代表例<ul class="sub"><li>「ルールやフローが決まっていて、処理に人の判断が不要な定型業務は、RPAで自動化できる代表的な仕事です。」</li><li>出典：NTT東日本「RPAに向いている・向いていない業務10選」2026年3月更新（RPAの話だが、GASにも当てはまる）</li></ul></li></ul>
+</div></section>
+
+<section class="slide"><h2>tips：AIと人が両方編集できる中間物を作る</h2><div class="body">
+<ul class="points"><li>AIの成果物を直したいときは、AIも人も編集できる形を間に挟む<ul class="sub"><li>例：このスライドもMarkdownの原稿から作っている</li></ul></li><li>根拠：MarkdownはAIとやりとりする共通語になっている<ul class="sub"><li>"Plain text won. As the lingua franca for interacting with LLMs, Markdown is now ubiquitous."</li><li>出典：Jorge Arango「The Resurgence of Plain Text in the Age of AI」2024年12月</li></ul></li></ul>
+<div class="flow small"><div class="node accent">中間物<small>Markdownなど</small></div><div class="arrow">→</div><div class="node">完成品<small>スライド・HTML</small></div></div>
+</div></section>
+
+<section class="slide"><h2>次回以降の候補</h2><div class="body">
+<ul class="points"><li>トリガーの設定</li><li>Slack連携</li><li>宿題を題材にした実践</li></ul>
+</div></section>
+
+<section class="slide"><span class="pill">実装例</span><h2>○○（HTMLで作ったアプリ）</h2><div class="body">
+<div class="cols"><div class="col"><ul class="points"><li><span class="warn">○○（何をするか、1〜2行で）</span><ul class="sub"><li><span class="em">入力</span>：○○</li><li><span class="em">出力</span>：○○</li></ul></li><li>使った仕組み<ul class="sub"><li>HTML ／ Webアプリ</li></ul></li></ul></div><div class="col"><div class="shot placeholder">画像：アプリの画面<small>images/example1.png を置くと表示されます</small></div></div></div>
+</div></section>
+
+<section class="slide"><span class="pill">実装例</span><h2>○○（Slackと連携する仕組み）</h2><div class="body">
+<div class="cols"><div class="col"><ul class="points"><li><span class="warn">○○（何をするか、1〜2行で）</span><ul class="sub"><li><span class="em">入力</span>：○○</li><li><span class="em">出力</span>：Slackの ○○ チャンネルへの通知</li></ul></li><li>使った仕組み<ul class="sub"><li>Slack連携（Webhook） ／ トリガー</li></ul></li></ul></div><div class="col"><div class="shot placeholder">画像：Slackに届いた通知<small>images/example2.png を置くと表示されます</small></div></div></div>
+</div></section>
+
+<section class="slide"><h2>発展：知っておくとよい言葉</h2><div class="body">
+<div class="terms"><div class="group">書き方の形式</div><div class="term"><b>マークダウン記法</b>　<span>見出しや箇条書きを記号で表す書き方</span></div><div class="term"><b>WYSIWYG</b>　<span>見たままの画面で編集する方式（Googleドキュメントなど）</span></div><div class="group">外部サービスとつなぐ</div><div class="term"><b>API</b>　<span>サービスが外部のプログラム向けに用意した窓口</span></div><div class="term"><b>Webhook</b>　<span>何か起きたら、指定URLへ自動で通知する仕組み</span></div><div class="term"><b>HTTPリクエスト</b>　<span>インターネット越しに依頼を送る通信の仕方</span></div><div class="term"><b>JSON</b>　<span>データをやりとりするときの書き方の形式</span></div><div class="group">鍵と権限</div><div class="term"><b>トークン／APIキー</b>　<span>外部サービスを使うための合言葉</span></div><div class="term"><b>スクリプトプロパティ</b>　<span>合言葉をコードの外に保管する場所</span></div><div class="term"><b>OAuth・スコープ</b>　<span>「何を許可するか」の仕組みと範囲</span></div><div class="group newcol">動かし方・運用</div><div class="term"><b>トリガー（時間主導型・イベント型）</b>　<span>時刻で動くか、出来事で動くか</span></div><div class="term"><b>実行ログ</b>　<span>プログラムが何をしたかの記録</span></div><div class="term"><b>開発環境／本番環境</b>　<span>試すための場所と、実際の業務で使っている場所</span></div><div class="term"><b>コンテナバインド／スタンドアロン</b>　<span>ファイルに紐づくか、単独か</span></div><div class="group">作れるものを広げる</div><div class="term"><b>Webアプリ（デプロイ）</b>　<span>GASの仕組みをURLで公開する</span></div><div class="term"><b>ライブラリ</b>　<span>他の人が作ったGASの部品を再利用する</span></div><div class="term"><b>HTML</b>　<span>Webページの見た目や構造を書く言語（マークアップ言語）</span></div></div>
+</div></section>
+
+<div id="bar"></div>
+<div id="num"></div>
+</div>
+
+<script>
+  const deck = document.getElementById('deck');
+  const slides = [...document.querySelectorAll('.slide')];
+  const bar = document.getElementById('bar');
+  const num = document.getElementById('num');
+
+  // 章扉の見出しを、後続スライドの左上ラベルとして付ける
+  let chapter = '';
+  slides.forEach(s => {
+    if (s.classList.contains('section')) {
+      chapter = s.querySelector('.no').textContent + '. ' + s.querySelector('h1').textContent;
+      return;
+    }
+    const label = s.dataset.chapter || chapter;
+    if (label && !s.classList.contains('title')) {
+      const el = document.createElement('div');
+      el.className = 'chapter';
+      el.textContent = label;
+      s.prepend(el);
+    }
+  });
+
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+    num.textContent = (i + 1) + ' / ' + slides.length;
+    history.replaceState(null, '', '#' + (i + 1));
+  }
+
+  function fit() {
+    const s = Math.min(innerWidth / 1280, innerHeight / 720);
+    deck.style.transform = `translate(-50%, -50%) scale(${s})`;
+  }
+
+  addEventListener('keydown', e => {
+    if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); show(i + 1); }
+    else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); show(i - 1); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key === 'f') document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+  });
+
+  // 画面の右半分クリックで次へ、左半分で前へ
+  addEventListener('click', e => show(e.clientX > innerWidth / 2 ? i + 1 : i - 1));
+
+  let touchX = null;
+  addEventListener('touchstart', e => { touchX = e.touches[0].clientX; });
+  addEventListener('touchend', e => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) show(dx < 0 ? i + 1 : i - 1);
+    touchX = null;
+  });
+
+  addEventListener('resize', fit);
+  fit();
+  show((parseInt(location.hash.slice(1), 10) || 1) - 1);
+</script>
+</body>
+</html>

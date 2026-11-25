@@ -1,0 +1,231 @@
+<!doctype html>
+<!-- このファイルは build.mjs が slides.md から自動生成します。直接編集しないでください。 -->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>初心者向けGAS講座</title>
+<style>
+  :root {
+    --ink: #1d1d1f;
+    --sub: #6e6e73;
+    --line: #d2d2d7;
+    --soft: #f4f4f6;
+    --accent: #2557d6;
+    --accent-soft: #eaf0fd;
+    --warn: #c2410c;
+    --warn-soft: #fdf0e8;
+    --font: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+    --mono: Menlo, Consolas, "Courier New", monospace;
+  }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #e8e8eb; font-family: var(--font); color: var(--ink); }
+  * { box-sizing: border-box; }
+
+  /* 1280×720 のキャンバスを画面に合わせて拡大縮小する */
+  #deck { position: absolute; left: 50%; top: 50%; width: 1280px; height: 720px; transform-origin: center; background: #fff; box-shadow: 0 2px 24px rgba(0,0,0,.08); }
+  .slide { position: absolute; inset: 0; padding: 88px 96px 72px; display: none; flex-direction: column; }
+  .slide.active { display: flex; }
+
+  .chapter { position: absolute; top: 36px; left: 96px; font-size: 18px; color: var(--sub); letter-spacing: .02em; }
+  h1 { font-size: 64px; line-height: 1.3; margin: 0; font-weight: 700; }
+  h2 { font-size: 44px; line-height: 1.35; margin: 0 0 32px; font-weight: 700; }
+  h3 { font-size: 28px; margin: 0 0 10px; font-weight: 700; }
+  p { margin: 0; }
+  .body { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; gap: 28px; }
+  .lead { font-size: 28px; line-height: 1.6; color: var(--sub); }
+  .note { font-size: 22px; line-height: 1.6; color: var(--sub); }
+  .em { color: var(--accent); font-weight: 700; }
+  span.warn { color: var(--warn); font-weight: 700; }
+  .center { text-align: center; }
+  .statement { font-size: 52px; font-weight: 700; line-height: 1.4; color: var(--ink); }
+  .big { font-size: 40px; font-weight: 700; color: var(--ink); }
+  .strong { font-size: 30px; font-weight: 700; color: var(--ink); }
+  p.box { background: var(--soft); border-radius: 16px; padding: 26px 30px; }
+  code { font-family: var(--mono); }
+  .pill + h2 { margin-top: 20px; }
+  .slide.tight .body { gap: 22px; }
+
+  ul.points { margin: 0; padding: 0; list-style: none; font-size: 28px; line-height: 1.5; display: flex; flex-direction: column; gap: 16px; }
+  ul.points li { padding-left: 1.1em; position: relative; }
+  ul.points li::before { content: ""; position: absolute; left: 0; top: .62em; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+  ol.nums { margin: 0; padding: 0; list-style: none; counter-reset: n; font-size: 28px; line-height: 1.5; display: flex; flex-direction: column; gap: 16px; }
+  ol.nums li { counter-increment: n; display: flex; gap: 20px; align-items: baseline; }
+  ol.nums li::before { content: counter(n); flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 22px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; transform: translateY(-4px); }
+
+  /* 第2階層の箇条書き */
+  ul.sub { margin: 6px 0 0; padding: 0; list-style: none; font-size: 23px; line-height: 1.5; color: #3a3a3c; display: flex; flex-direction: column; gap: 4px; }
+  ul.sub li { padding-left: 1.1em; position: relative; }
+  ul.sub li::before { content: ""; position: absolute; left: 0; top: .6em; width: 7px; height: 7px; border-radius: 50%; border: 2px solid var(--sub); background: none; }
+  .label { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 2px; font-weight: 700; }
+
+  /* 表紙・章扉 */
+  .slide.title { justify-content: center; }
+  .slide.title .sub { font-size: 32px; color: var(--accent); margin-top: 20px; font-weight: 700; }
+  .slide.section { justify-content: center; }
+  .slide.section .no { font-size: 120px; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 20px; }
+  .slide.section h1 { font-size: 56px; }
+
+  /* カード */
+  .grid { display: grid; gap: 24px; }
+  .g1 { grid-template-columns: 1fr; }
+  .g2 { grid-template-columns: 1fr 1fr; }
+  .g3 { grid-template-columns: 1fr 1fr 1fr; }
+  .g4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .card { background: var(--soft); border-radius: 16px; padding: 26px 30px; }
+  .card p { font-size: 22px; line-height: 1.6; color: var(--sub); }
+  .steps .card { padding: 22px 20px; }
+  .steps .card h3 { font-size: 20px; }
+  .compact .card { padding: 18px 22px; }
+  .compact .card h3 { font-size: 22px; margin-bottom: 6px; }
+  .compact .card p { font-size: 18px; line-height: 1.5; }
+  .compact .card p.quote { font-size: 18px; }
+  .compact .card p.src { font-size: 15px; }
+  .card.accent { background: var(--accent-soft); }
+  .card.accent h3 { color: var(--accent); }
+  .card.warn { background: var(--warn-soft); }
+  .card.warn h3 { color: var(--warn); }
+  .card.small h3 { font-size: 24px; white-space: nowrap; }
+  .card .label { font-size: 18px; color: var(--sub); margin-bottom: 6px; }
+
+  /* 流れ図 */
+  .flow { display: flex; align-items: center; justify-content: center; gap: 16px; }
+  .node { border: 2px solid var(--ink); border-radius: 14px; padding: 18px 26px; font-size: 28px; font-weight: 700; text-align: center; background: #fff; }
+  .node small { display: block; font-size: 18px; font-weight: 400; color: var(--sub); margin-top: 4px; }
+  .node.accent { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+  .node.ghost { border-style: dashed; border-color: var(--line); color: var(--sub); }
+  .node.dim { border-color: var(--line); color: var(--sub); font-weight: 400; }
+  .flow:not(.small) .node { white-space: nowrap; }
+  .node.wide { min-width: 280px; }
+  .node.warn { border-color: var(--warn); color: var(--warn); }
+  .flow.plain .node { border: none; background: none; padding: 0; font-size: 24px; font-weight: 400; color: var(--sub); }
+  .arrow { font-size: 30px; color: var(--sub); flex: none; }
+  .flow.small .node { font-size: 20px; padding: 14px 14px; flex: 1; }
+  .flow.small .arrow { font-size: 22px; }
+
+  .pill { display: inline-block; font-size: 20px; font-weight: 700; padding: 6px 16px; border-radius: 999px; background: var(--accent); color: #fff; align-self: flex-start; }
+  .chips { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .chip { font-size: 26px; padding: 10px 22px; border-radius: 999px; background: var(--soft); }
+  .code { font-family: var(--mono); font-size: 22px; background: var(--ink); color: #fff; padding: 16px 22px; border-radius: 10px; }
+
+  .prompt { background: var(--soft); border-left: 6px solid var(--accent); border-radius: 0 14px 14px 0; padding: 26px 36px; font-size: 24px; line-height: 1.7; }
+  .prompt.big { font-size: 30px; }
+  .prompt b { color: var(--accent); }
+  .prompt .sample { margin: 4px 0 4px 1em; padding: 8px 16px; background: #fff; border-radius: 8px; font-size: 21px; color: var(--sub); }
+
+  .rows { display: flex; flex-direction: column; gap: 10px; }
+  .row { display: flex; align-items: center; gap: 20px; font-size: 25px; }
+  .row .k { flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--soft); font-size: 20px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; }
+
+  .row.up .k { background: var(--accent); color: #fff; }
+  table.mini { border-collapse: collapse; font-size: 20px; width: 100%; background: #fff; }
+  table.mini th, table.mini td { border: 1px solid var(--line); padding: 6px 12px; text-align: left; }
+  table.mini th { background: var(--soft); font-weight: 700; }
+  .draft { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 8px 14px; font-size: 19px; line-height: 1.5; }
+  .draft.bad { border-color: var(--warn); background: var(--warn-soft); }
+
+  .terms { column-count: 2; column-gap: 48px; font-size: 18px; line-height: 1.4; }
+  .terms .group { font-size: 16px; color: var(--accent); font-weight: 700; margin-top: 10px; break-after: avoid; }
+  .terms .newcol { break-before: column; margin-top: 0; }
+  .terms .term { break-inside: avoid; margin-top: 4px; }
+  .terms b { font-size: 20px; }
+  .terms span { color: var(--sub); }
+
+  /* 画像 */
+  .shot { display: block; width: 100%; max-height: 380px; object-fit: contain; border-radius: 12px; }
+  .shot.short { max-height: 230px; }
+  .shot.mini { max-height: 150px; object-position: left center; }
+  .shot.placeholder { text-align: center; padding: 0 16px; height: 300px; border: 2px dashed var(--line); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 22px; color: var(--sub); }
+  .shot.placeholder.short { height: 230px; }
+  .shot.placeholder.mini { height: 150px; }
+  .card p.quote { color: var(--ink); font-size: 20px; }
+  .card p.src { font-size: 16px; }
+  .card p + p { margin-top: 8px; }
+  .shot.placeholder small { font-size: 16px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .col { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+  .cols.wide { grid-template-columns: 3fr 2fr; }
+  .code { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+  /* 進行状況 */
+  #bar { position: absolute; left: 0; bottom: 0; height: 6px; background: var(--accent); transition: width .2s; }
+  #num { position: absolute; right: 32px; bottom: 22px; font-size: 16px; color: var(--sub); font-variant-numeric: tabular-nums; }
+
+  @media print {
+    @page { size: 1280px 720px; margin: 0; }
+    html, body { overflow: visible; background: #fff; }
+    #deck { position: static; transform: none !important; box-shadow: none; height: auto; }
+    .slide { display: flex !important; position: relative; height: 720px; page-break-after: always; }
+    #bar, #num { display: none; }
+  }
+</style>
+</head>
+<body>
+<div id="deck">
+{{SLIDES}}
+
+<div id="bar"></div>
+<div id="num"></div>
+</div>
+
+<script>
+  const deck = document.getElementById('deck');
+  const slides = [...document.querySelectorAll('.slide')];
+  const bar = document.getElementById('bar');
+  const num = document.getElementById('num');
+
+  // 章扉の見出しを、後続スライドの左上ラベルとして付ける
+  let chapter = '';
+  slides.forEach(s => {
+    if (s.classList.contains('section')) {
+      chapter = s.querySelector('.no').textContent + '. ' + s.querySelector('h1').textContent;
+      return;
+    }
+    const label = s.dataset.chapter || chapter;
+    if (label && !s.classList.contains('title')) {
+      const el = document.createElement('div');
+      el.className = 'chapter';
+      el.textContent = label;
+      s.prepend(el);
+    }
+  });
+
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+    num.textContent = (i + 1) + ' / ' + slides.length;
+    history.replaceState(null, '', '#' + (i + 1));
+  }
+
+  function fit() {
+    const s = Math.min(innerWidth / 1280, innerHeight / 720);
+    deck.style.transform = `translate(-50%, -50%) scale(${s})`;
+  }
+
+  addEventListener('keydown', e => {
+    if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); show(i + 1); }
+    else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); show(i - 1); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key === 'f') document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+  });
+
+  // 画面の右半分クリックで次へ、左半分で前へ
+  addEventListener('click', e => show(e.clientX > innerWidth / 2 ? i + 1 : i - 1));
+
+  let touchX = null;
+  addEventListener('touchstart', e => { touchX = e.touches[0].clientX; });
+  addEventListener('touchend', e => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) show(dx < 0 ? i + 1 : i - 1);
+    touchX = null;
+  });
+
+  addEventListener('resize', fit);
+  fit();
+  show((parseInt(location.hash.slice(1), 10) || 1) - 1);
+</script>
+</body>
+</html>

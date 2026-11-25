@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "スライドを生成",
+      "type": "shell",
+      "command": "node",
+      "args": ["${workspaceFolder}/slides/build.mjs"],
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": { "reveal": "silent", "revealProblems": "onProblem", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "スライドを自動生成（保存のたび）",
+      "type": "shell",
+      "command": "node",
+      "args": ["${workspaceFolder}/slides/build.mjs", "--watch"],
+      "isBackground": true,
+      "problemMatcher": []
+    }
+  ]
+}
