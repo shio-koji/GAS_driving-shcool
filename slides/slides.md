@@ -919,27 +919,50 @@ Google Apps Scriptで書いてください。
 ## LLMにプログラムを書かせるか、直接やらせるか
 
 - __LLMにプログラムを書かせて実行する__
-  - LLMが働くのは書くときだけ。動く処理はルールベース
-  - 何度実行しても同じ結果。大量・定期の処理に向く
+  - LLMが働くのは書くときだけ。何度でも同じ結果になる
   - 処理するデータをLLMに渡さずに済む
 - __LLMに直接やらせる__（チャットにデータを貼って頼む、など）
-  - 毎回LLMが判断する。曖昧なものに強い
-  - 結果は毎回変わりうる。1回ずつの作業に向く
+  - 毎回LLMが判断する。曖昧なものに強いが、結果は変わりうる
   - 処理するデータをLLMに渡すことになる
 - → 今日の講座は前者（プログラムを書かせる）
 
+:::html
+<div class="wf-wrap">
+  <div class="wf"><div class="wf-label">書かせて実行</div>
+    <div class="n data">依頼文</div><div class="a">→</div>
+    <div class="n llm">LLM<small>最初に1回だけ</small></div><div class="a">→</div>
+    <div class="n data">コード</div><div class="a">＋</div>
+    <div class="n data">データ</div><div class="a">→</div>
+    <div class="n">GASのプログラム<small>何度でも同じ動き</small></div><div class="a">→</div>
+    <div class="n data">結果</div></div>
+  <div class="wf"><div class="wf-label">直接やらせる</div>
+    <div class="n data">データ</div><div class="a">→</div>
+    <div class="n llm">LLM<small>毎回判断する</small></div><div class="a">→</div>
+    <div class="n data">結果</div>
+    <div class="wf-legend" style="margin-left:auto"><span><i></i>ルールベース（GASのプログラム）</span><span><i class="llm"></i>LLM</span></div></div>
+</div>
+:::
 ---
 ## 処理の途中でLLMを使う
 
 - GASの処理の一部だけをLLMに任せられる
   - 例：フォームの自由記述を、Gemini APIで分類・要約してシートに書く
-  - 決まった部分はルールベース、曖昧な部分だけLLM
 - GASからGemini APIに文章を送り、結果を受け取る
   - APIキーが必要（スクリプトプロパティに保管する）
 - !!個人情報を含む文章を送るときは、特に注意!!
-  - 送った文章はGoogleに渡る。無料枠では製品改善や人のレビューに使われうる
-  - 送る前に「個人情報をAIに渡すときの判定基準」で判断する
+  - 送った文章はGoogleに渡る。送る前に「個人情報をAIに渡すときの判定基準」で判断する
 
+:::html
+<div class="wf-wrap">
+  <div class="wf" style="justify-content:center">
+    <div class="n data">フォームの回答</div><div class="a">→</div>
+    <div class="n">GAS<small>自由記述を取り出す</small></div><div class="a">→</div>
+    <div class="n llm">Gemini API（LLM）<small>分類・要約する。ここでGoogleに渡る</small></div><div class="a">→</div>
+    <div class="n">GAS<small>結果をシートに書く</small></div><div class="a">→</div>
+    <div class="n data">シート</div></div>
+  <div class="wf-legend"><span><i></i>ルールベース（GASのプログラム）</span><span><i class="llm"></i>LLM</span></div>
+</div>
+:::
 ---
 // ▼ 実装例：CALL4でありそうな架空の例。実際に作ったものがあれば差し替える。画像は slides/images/ に置く
 <!-- pill: 実装例 -->

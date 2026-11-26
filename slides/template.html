@@ -169,6 +169,20 @@
   .mini-ipo .r.mid b { color: var(--sub); }
   .mini-arrow { align-self: center; font-size: 20px; color: var(--sub); flex: none; }
 
+  /* ワークフロー図（LLMをどこに挟むか） */
+  .wf-wrap { display: flex; flex-direction: column; gap: 10px; }
+  .wf { display: flex; align-items: center; gap: 8px; }
+  .wf-label { flex: none; width: 150px; font-size: 16px; font-weight: 700; color: var(--sub); }
+  .wf .n { border: 2px solid var(--ink); border-radius: 10px; padding: 6px 12px; font-size: 16px; font-weight: 700; text-align: center; background: #fff; white-space: nowrap; }
+  .wf .n small { display: block; font-size: 12px; font-weight: 400; color: var(--sub); }
+  .wf .n.data { border-style: dashed; border-color: var(--line); font-weight: 400; }
+  .wf .n.llm { border-color: #7c3aed; background: #f3eefe; color: #6d28d9; }
+  .wf .n.llm small { color: #6d28d9; }
+  .wf .a { color: var(--sub); font-size: 18px; flex: none; }
+  .wf-legend { display: flex; gap: 18px; font-size: 14px; color: var(--sub); justify-content: flex-end; }
+  .wf-legend i { display: inline-block; width: 14px; height: 14px; border-radius: 4px; border: 2px solid var(--ink); vertical-align: -2px; margin-right: 6px; }
+  .wf-legend i.llm { border-color: #7c3aed; background: #f3eefe; }
+
   /* 画像 */
   .shot { display: block; width: 100%; max-height: 380px; object-fit: contain; border-radius: 12px; }
   .shot.short { max-height: 230px; }

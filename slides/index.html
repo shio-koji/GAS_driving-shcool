@@ -169,6 +169,20 @@
   .mini-ipo .r.mid b { color: var(--sub); }
   .mini-arrow { align-self: center; font-size: 20px; color: var(--sub); flex: none; }
 
+  /* ワークフロー図（LLMをどこに挟むか） */
+  .wf-wrap { display: flex; flex-direction: column; gap: 10px; }
+  .wf { display: flex; align-items: center; gap: 8px; }
+  .wf-label { flex: none; width: 150px; font-size: 16px; font-weight: 700; color: var(--sub); }
+  .wf .n { border: 2px solid var(--ink); border-radius: 10px; padding: 6px 12px; font-size: 16px; font-weight: 700; text-align: center; background: #fff; white-space: nowrap; }
+  .wf .n small { display: block; font-size: 12px; font-weight: 400; color: var(--sub); }
+  .wf .n.data { border-style: dashed; border-color: var(--line); font-weight: 400; }
+  .wf .n.llm { border-color: #7c3aed; background: #f3eefe; color: #6d28d9; }
+  .wf .n.llm small { color: #6d28d9; }
+  .wf .a { color: var(--sub); font-size: 18px; flex: none; }
+  .wf-legend { display: flex; gap: 18px; font-size: 14px; color: var(--sub); justify-content: flex-end; }
+  .wf-legend i { display: inline-block; width: 14px; height: 14px; border-radius: 4px; border: 2px solid var(--ink); vertical-align: -2px; margin-right: 6px; }
+  .wf-legend i.llm { border-color: #7c3aed; background: #f3eefe; }
+
   /* 画像 */
   .shot { display: block; width: 100%; max-height: 380px; object-fit: contain; border-radius: 12px; }
   .shot.short { max-height: 230px; }
@@ -552,11 +566,34 @@ open(<span class="s">"保存用/報告書.txt"</span>, <span class="s">"w"</span
 </div></section>
 
 <section class="slide"><h2>LLMにプログラムを書かせるか、直接やらせるか</h2><div class="body">
-<ul class="points"><li><span class="label">LLMにプログラムを書かせて実行する</span><ul class="sub"><li>LLMが働くのは書くときだけ。動く処理はルールベース</li><li>何度実行しても同じ結果。大量・定期の処理に向く</li><li>処理するデータをLLMに渡さずに済む</li></ul></li><li><span class="label">LLMに直接やらせる</span>（チャットにデータを貼って頼む、など）<ul class="sub"><li>毎回LLMが判断する。曖昧なものに強い</li><li>結果は毎回変わりうる。1回ずつの作業に向く</li><li>処理するデータをLLMに渡すことになる</li></ul></li><li class="then">今日の講座は前者（プログラムを書かせる）</li></ul>
+<ul class="points"><li><span class="label">LLMにプログラムを書かせて実行する</span><ul class="sub"><li>LLMが働くのは書くときだけ。何度でも同じ結果になる</li><li>処理するデータをLLMに渡さずに済む</li></ul></li><li><span class="label">LLMに直接やらせる</span>（チャットにデータを貼って頼む、など）<ul class="sub"><li>毎回LLMが判断する。曖昧なものに強いが、結果は変わりうる</li><li>処理するデータをLLMに渡すことになる</li></ul></li><li class="then">今日の講座は前者（プログラムを書かせる）</li></ul>
+<div class="wf-wrap">
+  <div class="wf"><div class="wf-label">書かせて実行</div>
+    <div class="n data">依頼文</div><div class="a">→</div>
+    <div class="n llm">LLM<small>最初に1回だけ</small></div><div class="a">→</div>
+    <div class="n data">コード</div><div class="a">＋</div>
+    <div class="n data">データ</div><div class="a">→</div>
+    <div class="n">GASのプログラム<small>何度でも同じ動き</small></div><div class="a">→</div>
+    <div class="n data">結果</div></div>
+  <div class="wf"><div class="wf-label">直接やらせる</div>
+    <div class="n data">データ</div><div class="a">→</div>
+    <div class="n llm">LLM<small>毎回判断する</small></div><div class="a">→</div>
+    <div class="n data">結果</div>
+    <div class="wf-legend" style="margin-left:auto"><span><i></i>ルールベース（GASのプログラム）</span><span><i class="llm"></i>LLM</span></div></div>
+</div>
 </div></section>
 
 <section class="slide"><h2>処理の途中でLLMを使う</h2><div class="body">
-<ul class="points"><li>GASの処理の一部だけをLLMに任せられる<ul class="sub"><li>例：フォームの自由記述を、Gemini APIで分類・要約してシートに書く</li><li>決まった部分はルールベース、曖昧な部分だけLLM</li></ul></li><li>GASからGemini APIに文章を送り、結果を受け取る<ul class="sub"><li>APIキーが必要（スクリプトプロパティに保管する）</li></ul></li><li><span class="warn">個人情報を含む文章を送るときは、特に注意</span><ul class="sub"><li>送った文章はGoogleに渡る。無料枠では製品改善や人のレビューに使われうる</li><li>送る前に「個人情報をAIに渡すときの判定基準」で判断する</li></ul></li></ul>
+<ul class="points"><li>GASの処理の一部だけをLLMに任せられる<ul class="sub"><li>例：フォームの自由記述を、Gemini APIで分類・要約してシートに書く</li></ul></li><li>GASからGemini APIに文章を送り、結果を受け取る<ul class="sub"><li>APIキーが必要（スクリプトプロパティに保管する）</li></ul></li><li><span class="warn">個人情報を含む文章を送るときは、特に注意</span><ul class="sub"><li>送った文章はGoogleに渡る。送る前に「個人情報をAIに渡すときの判定基準」で判断する</li></ul></li></ul>
+<div class="wf-wrap">
+  <div class="wf" style="justify-content:center">
+    <div class="n data">フォームの回答</div><div class="a">→</div>
+    <div class="n">GAS<small>自由記述を取り出す</small></div><div class="a">→</div>
+    <div class="n llm">Gemini API（LLM）<small>分類・要約する。ここでGoogleに渡る</small></div><div class="a">→</div>
+    <div class="n">GAS<small>結果をシートに書く</small></div><div class="a">→</div>
+    <div class="n data">シート</div></div>
+  <div class="wf-legend"><span><i></i>ルールベース（GASのプログラム）</span><span><i class="llm"></i>LLM</span></div>
+</div>
 </div></section>
 
 <section class="slide"><span class="pill">実装例</span><h2>問い合わせが来たらSlackに通知</h2><div class="body">
